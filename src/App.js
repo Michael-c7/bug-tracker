@@ -1,9 +1,8 @@
-import './App.css';
-
 function App() {
+
   return (
     <div>
-      bug tracker app
+    bug tracker app
     </div>
   );
 }
