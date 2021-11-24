@@ -26,7 +26,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth()
 
 export const signUp = (email, password) => {
-  return createUserWithEmailAndPassword(auth, email, password)
+  let unmounted = false;
+  if(!unmounted) {
+    return createUserWithEmailAndPassword(auth, email, password)
+  }
+
+  return () => {
+    unmounted = true;
+  }
 }
 
 export const login = (email, password) => {
@@ -41,11 +48,19 @@ export const logout = () => {
 
 // custom hook
 export const useAuth = () => {
-  const [ currentUser, setCurrentUser ] = useState()
+  const [currentUser, setCurrentUser] = useState()
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => setCurrentUser(user))
-    return unsub;
+    let unmounted = false;
+
+    if(!unmounted) {
+      const unsub = onAuthStateChanged(auth, (user) => setCurrentUser(user));
+      return unsub; 
+    }
+
+    return () => {
+        unmounted = true;
+    }
   }, [])
 
   return currentUser;

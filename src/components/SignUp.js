@@ -7,26 +7,29 @@ const SignUp = () => {
     const [loading, setLoading] = useState(false);
 
     const emailRef = useRef()
-    const passwordRef = useRef()
+    const passwordRef = useRef()    
 
-    
-
-    const handleSignUp = async () => {
+    const handleSignUp = async (e) => {
+        e.preventDefault()
+        // let unmounted = false
         setLoading(true)
         try {
             await signUp(emailRef.current.value,passwordRef.current.value)
         } catch(error) {
-            console.log(error.message)
+            console.log(error)
+            alert(error)
         }
         setLoading(false)
     }
 
-    const handleLoginIn = async () => {
+    const handleLoginIn = async (e) => {
+        e.preventDefault()
         setLoading(true)
         try {
             await login(emailRef.current.value,passwordRef.current.value)
         } catch(error) {
-            console.log(error.message)
+            console.log(error)
+            // alert(error)
         }
         setLoading(false)
     }
@@ -42,7 +45,7 @@ const SignUp = () => {
                 <label htmlFor="password">Password</label>
                 <input id="password" className="login-input" type="text"  ref={passwordRef}/>
 
-                <button className="login-button-main" type="submit" onClick={handleSignUp} disabled={loading}>Sign Up</button>
+                <button className="login-button-main" onClick={handleSignUp}>Sign Up</button>
                 
                 <div className="login-secondary-text">
                     Already have an account? <button onClick={handleLoginIn}>Log In</button>
