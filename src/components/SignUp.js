@@ -11,10 +11,16 @@ const SignUp = () => {
 
     const handleSignUp = async (e) => {
         e.preventDefault()
-        // let unmounted = false
+        let unmounted = false
         setLoading(true)
         try {
-            await signUp(emailRef.current.value,passwordRef.current.value)
+            if(!unmounted) {
+                await signUp(emailRef.current.value,passwordRef.current.value)
+            }
+
+            return () => {
+                unmounted = true;
+              }
         } catch(error) {
             console.log(error)
             alert(error)
@@ -24,12 +30,18 @@ const SignUp = () => {
 
     const handleLoginIn = async (e) => {
         e.preventDefault()
+        let unmounted = false
         setLoading(true)
         try {
-            await login(emailRef.current.value,passwordRef.current.value)
+            if(!unmounted) {
+                await login(emailRef.current.value,passwordRef.current.value)
+            }
+
+            return () => {
+                unmounted = true;
+              }
         } catch(error) {
             console.log(error)
-            // alert(error)
         }
         setLoading(false)
     }
@@ -38,6 +50,9 @@ const SignUp = () => {
         <section className="login-container">
             <h1 className="login-heading">Sign Up</h1>
             <form className="login-form">
+                {/*
+                    add first name & last name inputs
+                */}
 
                 <label htmlFor="username">Email</label>
                 <input id="email" className="login-input" type="email" required ref={emailRef}/>
@@ -50,6 +65,12 @@ const SignUp = () => {
                 <div className="login-secondary-text">
                     Already have an account? <button onClick={handleLoginIn}>Log In</button>
                 </div>
+
+                {/*
+                    add reset password button
+
+                    add login as guest button
+                */}
             </form>
 
             
