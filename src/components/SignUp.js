@@ -1,79 +1,48 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
+import { useUserContext } from '../context/userContext';
 import "../styles/login.scss"
-import { signUp, login } from "../firebase"
+
 
 
 const SignUp = () => {
-    const [loading, setLoading] = useState(false);
-
     const emailRef = useRef()
-    const passwordRef = useRef()    
+    const nameRef = useRef() 
+    const passwordRef = useRef()   
 
-    const handleSignUp = async (e) => {
+    const { registerUser } = useUserContext()
+
+    const onSubmit = e => {
         e.preventDefault()
-        let unmounted = false
-        setLoading(true)
-        try {
-            if(!unmounted) {
-                await signUp(emailRef.current.value,passwordRef.current.value)
-            }
+        const email = emailRef.current.value;
+        const name = nameRef.current.value;
+        const password = passwordRef.current.value;
 
-            return () => {
-                unmounted = true;
-              }
-        } catch(error) {
-            console.log(error)
-            alert(error)
+        if(email && name &&  password) {
+            registerUser(email, name, password)
         }
-        setLoading(false)
     }
-
-    const handleLoginIn = async (e) => {
-        e.preventDefault()
-        let unmounted = false
-        setLoading(true)
-        try {
-            if(!unmounted) {
-                await login(emailRef.current.value,passwordRef.current.value)
-            }
-
-            return () => {
-                unmounted = true;
-              }
-        } catch(error) {
-            console.log(error)
-        }
-        setLoading(false)
-    }
+    
     
     return (
         <section className="login-container">
             <h1 className="login-heading">Sign Up</h1>
-            <form className="login-form">
-                {/*
-                    add first name & last name inputs
-                */}
+            <form className="login-form" onSubmit={onSubmit}>
 
-                <label htmlFor="username">Email</label>
-                <input id="email" className="login-input" type="email" required ref={emailRef}/>
+                <label htmlFor="name">Name</label>
+                <input id="name" className="login-input" type="text" ref={nameRef}/>
+
+                <label htmlFor="email">Email</label>
+                <input id="email" className="login-input" type="email" ref={emailRef}/>
 
                 <label htmlFor="password">Password</label>
-                <input id="password" className="login-input" type="text"  ref={passwordRef}/>
+                <input id="password" className="login-input" type="text" ref={passwordRef}/>
 
-                <button className="login-button-main" onClick={handleSignUp}>Sign Up</button>
+                <button className="login-button-main" type="submit">Sign Up</button>
                 
-                <div className="login-secondary-text">
-                    Already have an account? <button onClick={handleLoginIn}>Log In</button>
-                </div>
-
-                {/*
-                    add reset password button
-
-                    add login as guest button
-                */}
+                {/* <div className="login-secondary-text">
+                    Already have an account? <button>Log In</button>
+                </div> */}
             </form>
-
-            
         </section>
     )
 }

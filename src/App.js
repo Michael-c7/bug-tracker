@@ -1,17 +1,19 @@
 import SignUp from "./components/SignUp"
+import SignIn from "./components/SignIn"
+import ForgotPassword from "./components/ForgotPassword"
 import Dashboard from "./components/Dashboard";
-import { useAuth } from "./firebase"
+import { useUserContext } from "./context/userContext";
 
 function App() {
-  const currentUser = useAuth()
+  const {loading, error, user} = useUserContext()
 
   return (
     <div>
-      {/* <h2>bug tracker app</h2> */}
-      {/* <Dashboard/>
-      <SignUp/> */}
+      {error && <p className="error-message">{error}</p>}
+      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : <SignUp/>}</>}
+    
 
-      {currentUser ? <Dashboard/> : <SignUp/>}
+    
     </div>
   );
 }
@@ -21,13 +23,16 @@ export default App;
 
 
 /*
-https://dev.to/jexperton/how-to-fix-the-react-memory-leak-warning-d4i
+TODO
+-
+1. implement the start menu 
+- add the forgot / reset password functionality [x]
+- add first name & last name to the sign up form [x]
+- add sign in as guest functionality
+  -separate the sign up,login,forgot password form into different pages(react router)
 
-https://www.rockyourcode.com/avoid-memory-leak-with-react-setstate-on-an-unmounted-component/#:~:text=Specifically%2C%20calling%20setState()%20in,memory%20leaks%20with%20data%20fetching.
+2. Implement roles
 
-https://medium.com/trabe/avoid-updates-on-unmounted-react-components-2fbadab17ad2
 
-https://stackoverflow.com/questions/54954385/react-useeffect-causing-cant-perform-a-react-state-update-on-an-unmounted-comp
-
-https://www.debuggr.io/react-update-unmounted-component/
+3. create the bug tracker software functionality
 */

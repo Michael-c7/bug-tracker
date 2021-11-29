@@ -1,25 +1,16 @@
 import React from 'react'
-import { useAuth, logout } from "../firebase"
+import { useUserContext } from '../context/userContext'
 
 const Dashboard = () => {
-    const currentUser = useAuth()
-
-    const handleLogout = async  _ => {
-        // setLoading(true)
-        try {
-            await logout()
-        } catch(error) {
-            console.log(error.message)
-        }
-        // setLoading(false)
-    }
+    const { user, logoutUser } = useUserContext()
 
     return (
         <div>
-            dashboard component
-            <div>current users email: {currentUser?.email}</div>
+            <h1>dashboard component</h1>
+            <h2>Name : {user.displayName}</h2>
+            <h3>Email : {user.email}</h3>
 
-            <button onClick={handleLogout}>Log Out</button>
+            <button onClick={logoutUser}>Log Out</button>
         </div>
     )
 }
