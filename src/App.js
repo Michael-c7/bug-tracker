@@ -17,10 +17,9 @@ function App() {
   return (
     <div>
       {error && <p className="error-message">{error}</p>}
-      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : <Router>
-        {/* <Link to="/SignIn">{<SignIn/>}</Link> */}
-
-        <Routes>
+      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : (
+        <Router>
+          <Routes>
             <Route exact path='/SignIn' element={<SignIn/>}/>
 
             <Route exact path='/SignUp' element={<SignUp/>}/>
@@ -31,11 +30,9 @@ function App() {
           </Routes>
         
         </Router>
+      )
         
       }</>}
-    
-
-    
     </div>
   );
 }
@@ -51,10 +48,10 @@ TODO
 - add the forgot / reset password functionality [x]
 - add first name & last name to the sign up form [x]
 
--separate the sign up, login, forgot password form into different pages(react router)
+-separate the sign up, login, forgot password form into different pages(react router) [X]
 
 - add sign in as guest functionality 
-  [Will have demo account for each role that you can log in as]
+[Will have demo account for each role that you can log in as]
 
 - style the sign in, sign up and reset password forms
 
