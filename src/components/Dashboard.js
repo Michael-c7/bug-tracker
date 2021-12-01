@@ -11,9 +11,9 @@ const Dashboard = () => {
     return (
         <div>
             <h1>dashboard component</h1>
-            <h2>Name : {name}</h2>
-            <h3>Email : {user.email}</h3>
-            <h3>Role : {role}</h3>
+            <h2>Name : {name ? name : "Loading Name..."}</h2>
+            <h3>Email : {user.email ? user.email : "Loading Email..."}</h3>
+            <h3>Role : {role ? role : "Loading Role.."}</h3>
 
             <button onClick={logoutUser}>Log Out</button>
         </div>

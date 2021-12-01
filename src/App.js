@@ -28,11 +28,16 @@ TODO
 1. implement the start menu 
 - add the forgot / reset password functionality [x]
 - add first name & last name to the sign up form [x]
-- add sign in as guest functionality
-  -separate the sign up,login,forgot password form into different pages(react router)
+
+-separate the sign up, login, forgot password form into different pages(react router)
+
+- add sign in as guest functionality 
+  [Will have demo account for each role that you can log in as]
+
+- style the sign in, sign up and reset password forms
+
 
 2. Implement roles
-
 
 3. create the bug tracker software functionality
 */

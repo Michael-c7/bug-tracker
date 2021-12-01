@@ -41,12 +41,57 @@ export const UserContextProvider = ({children}) => {
     }, [])
 
 
+
+
+    const getUserInfo = () => {
+        /*call this function: on sign up,
+         on log in, on page load(when logged in)*/
+
+
+        onAuthStateChanged(auth, (user) => {
+    // 1. check if user is logged in / authenticated
+            if(user) {
+            // 2. get their info from the firestore database
+                // console.log(user.uid)
+                console.log("user is logged in")
+
+                const querySnapshot = getDocs(collection(db, "users")).then((item) => {
+                    let x = item.docs.map((thing) => {
+                        
+                        /*checking if object of values exists and if the current objects uid value(the unique user id) is equal to signed in users uid*/
+                        if(thing["_document"].data.value.mapValue.fields && thing["_document"].data.value.mapValue.fields.uid.stringValue === user.uid) {
+                            let currentInfo = thing["_document"].data.value.mapValue.fields;
+                            console.log(currentInfo)
+                            setUserInfo({
+                                email:currentInfo.email.stringValue,
+                                name:currentInfo.name.stringValue,
+                                role:currentInfo.role.stringValue,
+                                uid:currentInfo.uid.stringValue,
+                            })
+                        }
+                    })
+                })
+            } else {
+                // user is signed out
+            }
+        })
+
+
+    }
+
+
+    useEffect(() => {
+        getUserInfo()
+    }, [])
+
+
     
 
     const registerUser = (email, name, password, role) => {
         setLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
         .then((cred) => {
+            // creating / adding the info the database
             addDoc(collection(db, "users"), {
                 email,
                 name,
@@ -71,9 +116,10 @@ export const UserContextProvider = ({children}) => {
             /*IMPORTANT only triggered to get the data on logged in 
             I should trigger write a separate function for this and 
             1. trigger on login
-            2. trigger on reload
+            2. trigger on reload / onload
              */
             setCurrentUserUID(res.user.uid);
+            // getting the user info from the database
             const querySnapshot = getDocs(collection(db, "users")).then((item) => {
                 let x = item.docs.map((thing) => {
                     
