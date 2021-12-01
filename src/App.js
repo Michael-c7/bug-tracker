@@ -1,8 +1,15 @@
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
 import ForgotPassword from "./components/ForgotPassword"
+import ErrorPage from "./components/ErrorPage"
 import Dashboard from "./components/Dashboard";
 import { useUserContext } from "./context/userContext";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const {loading, error, user} = useUserContext()
@@ -10,7 +17,22 @@ function App() {
   return (
     <div>
       {error && <p className="error-message">{error}</p>}
-      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : <SignIn/>}</>}
+      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : <Router>
+        {/* <Link to="/SignIn">{<SignIn/>}</Link> */}
+
+        <Routes>
+            <Route exact path='/SignIn' element={<SignIn/>}/>
+
+            <Route exact path='/SignUp' element={<SignUp/>}/>
+
+            <Route exact path='/ForgotPassword' element={<ForgotPassword/>}/>
+           
+            <Route exact path='*' element={<ErrorPage/>}/>
+          </Routes>
+        
+        </Router>
+        
+      }</>}
     
 
     

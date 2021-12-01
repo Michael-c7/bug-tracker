@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { useUserContext } from '../context/userContext'
+import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
     const emailRef = useRef()
@@ -21,6 +22,9 @@ const ForgotPassword = () => {
 
                 <button className="login-button-main" type="submit">Send reset password email</button>
 
+                <div className="login-button-main">Already have an account? <Link to="/SignIn">Sign In</Link></div>
+
+                <div className="login-button-main">Dont have an account? <Link to="/SignUp">Sign up</Link></div>
             </form>
         </section>
     )

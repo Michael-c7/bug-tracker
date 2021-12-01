@@ -1,7 +1,8 @@
 import React, { useRef } from 'react'
 import { useUserContext } from '../context/userContext';
 import "../styles/login.scss"
-
+import { Link } from "react-router-dom";
+  
 
 
 const SignUp = () => {
@@ -48,10 +49,8 @@ const SignUp = () => {
                 </select>
 
                 <button className="login-button-main" type="submit">Sign Up</button>
-                
-                {/* <div className="login-secondary-text">
-                    Already have an account? <button>Log In</button>
-                </div> */}
+
+                <div className="login-button-main">Already have an account? <Link to="/SignIn">Sign In</Link></div>
             </form>
         </section>
     )

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { useUserContext } from '../context/userContext'
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
     const emailRef = useRef()
@@ -30,7 +31,9 @@ const SignIn = () => {
 
                 <button className="login-button-main" type="submit">Sign In</button>
                 
-                <button  className="login-button-main">forgot password?</button>
+                <Link className="login-button-main" to="/forgotPassword">forgot password?</Link>
+
+                <div className="login-button-main">Dont have an account? <Link to="/SignUp">Sign up</Link></div>
             </form>
         </section>
     )
