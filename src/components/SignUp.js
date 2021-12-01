@@ -7,7 +7,8 @@ import "../styles/login.scss"
 const SignUp = () => {
     const emailRef = useRef()
     const nameRef = useRef() 
-    const passwordRef = useRef()   
+    const passwordRef = useRef()
+    const roleRef = useRef() 
 
     const { registerUser } = useUserContext()
 
@@ -16,9 +17,10 @@ const SignUp = () => {
         const email = emailRef.current.value;
         const name = nameRef.current.value;
         const password = passwordRef.current.value;
+        const role = roleRef.current.value;
 
-        if(email && name &&  password) {
-            registerUser(email, name, password)
+        if(email && name &&  password && roleRef) {
+            registerUser(email, name, password, role)
         }
     }
     
@@ -36,6 +38,14 @@ const SignUp = () => {
 
                 <label htmlFor="password">Password</label>
                 <input id="password" className="login-input" type="text" ref={passwordRef}/>
+
+                <label htmlFor="role">Select a role</label>
+                <select name="role" id="role" ref={roleRef}>
+                    <option value="submitter">submitter</option>
+                    <option value="project manager">project manager</option>
+                    <option value="developer">developer</option>
+                    <option value="admin">admin</option>
+                </select>
 
                 <button className="login-button-main" type="submit">Sign Up</button>
                 

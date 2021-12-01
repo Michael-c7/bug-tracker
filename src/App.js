@@ -10,7 +10,7 @@ function App() {
   return (
     <div>
       {error && <p className="error-message">{error}</p>}
-      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : <SignUp/>}</>}
+      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : <SignIn/>}</>}
     
 
     

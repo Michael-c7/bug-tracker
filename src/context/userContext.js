@@ -9,7 +9,11 @@ import {
     reload,
  } from "firebase/auth";
 
-import { auth } from "../firebase"
+ import { collection, addDoc, getDocs  } from "firebase/firestore"; 
+
+import { auth, db } from "../firebase"
+
+// const userData = doc
 
 const UserContext = createContext({})
 
@@ -20,6 +24,8 @@ export const UserContextProvider = ({children}) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState()
     const [error, setError] = useState("")
+    const [currentUserUID, setCurrentUserUID] = useState()
+    const [userInfo, setUserInfo] = useState({})
 
 
 
@@ -37,23 +43,22 @@ export const UserContextProvider = ({children}) => {
 
     
 
-    const registerUser = (email, name, password) => {
+    const registerUser = (email, name, password, role) => {
         setLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-            return updateProfile(auth.currentUser, {
-                displayName:name,
-            })
-            .then(res => {
-                console.log(res)
-                return reload()
-            })
-            .catch(err => setError(err.message))
-            .finally(() => setLoading(false))
+        .then((cred) => {
+            addDoc(collection(db, "users"), {
+                email,
+                name,
+                role,
+                uid:cred.user.uid,
+              }).then(res => console.log(res))
+              .catch((error) => setError(error))
+              setCurrentUserUID(cred.user.uid)   
         })
-        
+        .catch(err => setError(err.message))
+        .finally(() => setLoading(false))
       };
-
 
 
 
@@ -62,7 +67,30 @@ export const UserContextProvider = ({children}) => {
     const signInUser = (email, password) => {
         setLoading(true)
         signInWithEmailAndPassword(auth, email, password)
-        .then(res => console.log(res))
+        .then(res => {
+            /*IMPORTANT only triggered to get the data on logged in 
+            I should trigger write a separate function for this and 
+            1. trigger on login
+            2. trigger on reload
+             */
+            setCurrentUserUID(res.user.uid);
+            const querySnapshot = getDocs(collection(db, "users")).then((item) => {
+                let x = item.docs.map((thing) => {
+                    
+                    /*checking if object of values exists and if the current objects uid value(the unique user id) is equal to signed in users uid*/
+                    if(thing["_document"].data.value.mapValue.fields && thing["_document"].data.value.mapValue.fields.uid.stringValue === res.user.uid) {
+                        let currentInfo = thing["_document"].data.value.mapValue.fields;
+                        console.log(currentInfo)
+                        setUserInfo({
+                            email:currentInfo.email.stringValue,
+                            name:currentInfo.name.stringValue,
+                            role:currentInfo.role.stringValue,
+                            uid:currentInfo.uid.stringValue,
+                        })
+                    }
+                })
+            })
+        })
         .catch(error => setError(error.message))
         .finally(setLoading(false))
     }
@@ -89,7 +117,7 @@ export const UserContextProvider = ({children}) => {
         signInUser,
         logoutUser,
         forgotPassword,
-
+        userInfo,
     }
 
 
