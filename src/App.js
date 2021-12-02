@@ -3,6 +3,8 @@ import SignIn from "./components/SignIn"
 import ForgotPassword from "./components/ForgotPassword"
 import ErrorPage from "./components/ErrorPage"
 import Dashboard from "./components/Dashboard";
+import Loading from "./components/Loading"
+import ErrorMsg from "./components/ErrorMsg"
 import { useUserContext } from "./context/userContext";
 import {
   BrowserRouter as Router,
@@ -16,8 +18,8 @@ function App() {
 
   return (
     <div>
-      {error && <p className="error-message">{error}</p>}
-      {loading ? <h2>Loading...</h2> : <>{user ? <Dashboard/> : (
+      {error && <ErrorMsg/>}
+      {loading ? <Loading/> : <>{user ? <Dashboard/> : (
         <Router>
           <Routes>
             <Route exact path='/SignIn' element={<SignIn/>}/>
@@ -30,9 +32,7 @@ function App() {
           </Routes>
         
         </Router>
-      )
-        
-      }</>}
+      )}</>}
     </div>
   );
 }
@@ -44,16 +44,13 @@ export default App;
 /*
 TODO
 -
-1. implement the start menu 
-- add the forgot / reset password functionality [x]
-- add first name & last name to the sign up form [x]
-
--separate the sign up, login, forgot password form into different pages(react router) [X]
-
-- add sign in as guest functionality 
-[Will have demo account for each role that you can log in as]
-
-- style the sign in, sign up and reset password forms
+1. style the menus
+- sign in [X]
+- sign up [X]
+- reset password forms [X]
+- proper loading animation
+- error msg
+- send email reset link msg
 
 
 2. Implement roles

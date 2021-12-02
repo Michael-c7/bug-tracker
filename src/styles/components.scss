@@ -1,4 +1,155 @@
+// @use "base";
+$blue-000:#3552CA;
+$red-000:#e74c3c;
+$gray-000:#F2F7FB;
+$gray-050:#BCBCC4;
+$gray-100:#A0A6B9;
 
-// inputs
+// form
+.form-container {
+    position: relative;
+    background:#fff;
+    padding:1.5rem 2rem;
+    min-width:150px;
+    width:400px;
+    max-width:80%;
+    border-radius: 3px;
+    filter:drop-shadow(0px 10px 10px rgba(99, 99, 99, 0.3));
+}
+
+.form-header {
+    // margin-bottom:2rem;
+    font-size:1.75rem;
+    font-weight:400;
+}
+
+.form-sub-header {
+    margin:1rem 0;
+    font-size:1.5rem;
+    font-weight:400;
+}
+
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-label {
+    width:100%;
+}
+
+.form-input {
+    width:inherit;
+    border:none;
+    border-bottom: 1px solid $gray-100;
+    padding:0.5rem;
+    // margin:0.75rem 0;
+}
+
+
+.form-item {
+    padding:0.25rem;
+    margin:0.5rem;
+}
+
+
+
 
 // buttons
+.btn-main {
+    border:none;
+    background-color: $blue-000;
+    color:#fff;
+    font-size:1rem;
+    padding:0.9rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    border:1px solid #000;
+    background-color: transparent;
+    color:#000;
+    font-size:1rem;
+    padding:0.9rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+// links
+.link-main {
+    // color:var(--blue-000);
+    color:$blue-000;
+    text-decoration: underline;
+}
+
+
+
+// misc
+.center-transform {
+    // make sure the parent is a non absolute position
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+
+.center-text {
+    text-align: center;
+}
+
+.shrug {
+    font-size:1.5rem;
+    font-weight:700;
+}
+
+
+
+
+
+
+// spacing
+
+    // top & bottom
+    .spacing-box-tb-xxxs {
+        margin:0.25rem 0;
+    }
+
+    .spacing-box-tb-xxs {
+        margin:0.5rem 0;
+    }
+
+    .spacing-box-tb-xs {
+        margin:0.75rem 0;
+    }
+
+
+    .spacing-box-tb-s {
+        margin:1rem 0;
+    }
+
+    .spacing-box-tb-m {
+        margin: 1.25rem 0;
+    }
+
+    .spacing-box-tb-l {
+        margin: 2rem 0;
+    }
+
+
+    // top
+    .spacing-box-t-s {
+        margin: 1rem 0;
+    }
+
+    // bottom {
+    .spacing-box-t-xl {
+        margin-bottom:2rem;
+    }

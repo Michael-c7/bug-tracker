@@ -1,11 +1,13 @@
 import React from 'react'
+import { Link } from "react-router-dom";
+
 
 const ErrorPage = () => {
     return (
-        <div>
-            <h1>Something went wrong</h1>
-            <div>¯\_(ツ)_/¯</div>
-            <button>Go to dashboard</button>
+        <div className="form-container center-transform center-text">
+            <h1 className="form-header">Something went wrong.</h1>
+            <div className="spacing-box-tb-s shrug">¯\_(ツ)_/¯</div>
+            <button className="btn-main"><Link to="/signIn">Go Home</Link></button>
         </div>
     )
 }

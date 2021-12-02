@@ -13,19 +13,20 @@ const ForgotPassword = () => {
     }
 
     return (
-        <section className="login-container">
-            <h1 className="login-heading">Reset Password</h1>
-            <form className="login-form" onSubmit={forgotPasswordHandler}>
-                
-                <label htmlFor="email">Email</label>
-                <input id="email" className="login-input" type="email" required ref={emailRef}/>
+        <section className="form-container center-transform">
+            <h1 className="form-header center-text spacing-box-t-xl">Reset Password</h1>
+            <form className="form-column" onSubmit={forgotPasswordHandler}>
+                <label className="form-label spacing-box-tb-m">
+                    <input className="form-input" type="email" required ref={emailRef} placeholder="Email"/>
+                </label>
 
-                <button className="login-button-main" type="submit">Send reset password email</button>
-
-                <div className="login-button-main">Already have an account? <Link to="/SignIn">Sign In</Link></div>
-
-                <div className="login-button-main">Dont have an account? <Link to="/SignUp">Sign up</Link></div>
+                <button className="btn-main" type="submit">Send password reset email</button>
             </form>
+
+            <div className="spacing-box-tb-m center-text">
+                <div className="spacing-box-tb-xxs">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>
+                <div className="spacing-box-tb-xxs">Dont have an account? <Link className="link-main" to="/SignUp">Sign up</Link></div>
+            </div>
         </section>
     )
 }

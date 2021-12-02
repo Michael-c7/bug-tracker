@@ -2,6 +2,9 @@ import React, { useRef } from 'react'
 import { useUserContext } from '../context/userContext'
 import { Link } from "react-router-dom";
 import demoUserLoginInfo from "../demoUserLoginInfo"
+import "../styles/components.scss";
+
+import Loading from "./Loading"
 
 const SignIn = () => {
     const emailRef = useRef()
@@ -26,29 +29,33 @@ const SignIn = () => {
     
 
     return (
-        <section className="login-container">
-            <h1 className="login-heading">Sign In</h1>
-            <form className="login-form" onSubmit={onSubmit}>
+        <section className="form-container center-transform">
+            <h1 className="form-header center-text spacing-box-t-xl">Sign In</h1>
+            <form className="form-column" onSubmit={onSubmit}>
+                <label className="form-label spacing-box-tb-xs">
+                    <input className="form-input" type="email" required ref={emailRef} placeholder="Email"/>    
+                </label>
 
-                <label htmlFor="email">Email</label>
-                <input id="email" className="login-input" type="email" required ref={emailRef}/>
+                <label className="form-label spacing-box-tb-xs">
+                    <input className="form-input" type="text" required ref={passwordRef} placeholder="Password"/>    
+                </label>
 
-                <label htmlFor="password">Password</label>
-                <input id="password" className="login-input" type="text" ref={passwordRef}/>
-
-                <button className="login-button-main" type="submit">Sign In</button>
+                <button className="btn-main spacing-box-tb-m" type="submit">Sign In</button>
                 
-                <Link className="login-button-main" to="/forgotPassword">forgot password?</Link>
-
-                <div className="login-button-main">Dont have an account? <Link to="/SignUp">Sign up</Link></div>
+                <div className="spacing-box-tb-s center-text">
+                    <div className="spacing-box-tb-xxs">Forgot your <Link className="center-text link-main" to="/forgotPassword">Password?</Link></div>
+                    <div className="spacing-box-tb-xxs">Don't Have an Account? <Link className="link-main" to="/SignUp">Sign Up</Link></div>
+                </div>
             </form>
 
-            <div className="demo-user-container">
-                <h2>Try a demo user!</h2>
-                <button onClick={() => signInDemoAdmin()}>Admin</button>
-                <button onClick={() => signInDemoProjectManger()}>Project Manager</button>
-                <button onClick={() => signInDemoSubmitter()}>submitter</button>
-                <button onClick={() => signInDemoDeveloper()}>Developer</button>
+            <div>
+                <h2 className="center-text form-sub-header">Try a Demo account!</h2>
+                <div className="form-column">
+                    <button className="form-item btn-secondary" onClick={() => signInDemoAdmin()}>Admin</button>
+                    <button className="form-item btn-secondary" onClick={() => signInDemoProjectManger()}>Project Manager</button>
+                    <button className="form-item btn-secondary" onClick={() => signInDemoSubmitter()}>submitter</button>
+                    <button className="form-item btn-secondary" onClick={() => signInDemoDeveloper()}>Developer</button>
+                </div>
             </div>
         </section>
     )

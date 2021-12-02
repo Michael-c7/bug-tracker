@@ -27,20 +27,22 @@ const SignUp = () => {
     
     
     return (
-        <section className="login-container">
-            <h1 className="login-heading">Sign Up</h1>
-            <form className="login-form" onSubmit={onSubmit}>
+        <section className="form-container center-transform">
+            <h1 className="form-header center-text spacing-box-t-xl">Sign Up</h1>
+            <form className="form-column" onSubmit={onSubmit}>
+                <label className="form-label spacing-box-tb-xs">
+                    <input className="form-input" type="text" ref={nameRef} placeholder="Name"/>   
+                </label>
 
-                <label htmlFor="name">Name</label>
-                <input id="name" className="login-input" type="text" ref={nameRef}/>
+                <label className="form-label spacing-box-tb-xs">
+                    <input className="form-input" type="email" ref={emailRef} placeholder="Email"/>
+                </label>
 
-                <label htmlFor="email">Email</label>
-                <input id="email" className="login-input" type="email" ref={emailRef}/>
+                <label className="form-label spacing-box-tb-xs">
+                    <input className="form-input" type="text" ref={passwordRef} placeholder="Password"/>
+                </label>
 
-                <label htmlFor="password">Password</label>
-                <input id="password" className="login-input" type="text" ref={passwordRef}/>
-
-                <label htmlFor="role">Select a role</label>
+                <label className="spacing-box-tb-xxs" htmlFor="role">Select a role</label>
                 <select name="role" id="role" ref={roleRef}>
                     <option value="submitter">submitter</option>
                     <option value="project manager">project manager</option>
@@ -48,9 +50,9 @@ const SignUp = () => {
                     <option value="admin">admin</option>
                 </select>
 
-                <button className="login-button-main" type="submit">Sign Up</button>
+                <button className="btn-main spacing-box-tb-l" type="submit">Sign Up</button>
 
-                <div className="login-button-main">Already have an account? <Link to="/SignIn">Sign In</Link></div>               
+                <div className="center-text">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>               
             </form>
         </section>
     )

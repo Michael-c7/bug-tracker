@@ -2,29 +2,7 @@ body {
     background:#ddd;
 }
 
-.login-container {
-    position: relative;
-    background: #fff;
-    padding:1.5rem;
-    min-width:150px;
-    width:450px;
-    max-width:80%;
 
-    position: absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%, -50%);
-}
-
-.login-heading {
-    margin-bottom:1.5rem;
-    text-align: center;
-}
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-}
 
 .login-button-main {
     margin-top:1.5rem;
