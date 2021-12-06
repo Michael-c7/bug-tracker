@@ -20,7 +20,7 @@ const ForgotPassword = () => {
                     <input className="form-input" type="email" required ref={emailRef} placeholder="Email"/>
                 </label>
 
-                <button className="btn-main" type="submit">Send password reset email</button>
+                <button className="btn-main" type="submit"><Link to="/SuccessPassword">Send password reset email</Link></button>
             </form>
 
             <div className="spacing-box-tb-m center-text">

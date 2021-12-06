@@ -32,8 +32,7 @@ export const UserContextProvider = ({children}) => {
             res ? setUser(res) : setUser(null)
             setError("")
             setLoading(false)
-        })
-
+        });
         return unsubscribe;
     }, [])
 
@@ -45,8 +44,6 @@ export const UserContextProvider = ({children}) => {
         // 1. check if user is logged in / authenticated
             if(user) {
             // 2. get their info from the firestore database
-                console.log("user is logged in")
-
                 getDocs(collection(db, "users")).then((item) => {
                     item.docs.forEach((thing) => {
                         /*checking if object of values exists and if the current objects uid value(the unique user id) is equal to signed in users uid*/

@@ -43,7 +43,7 @@ const SignUp = () => {
                 </label>
 
                 <label className="spacing-box-tb-xxs" htmlFor="role">Select a role</label>
-                <select name="role" id="role" ref={roleRef}>
+                <select className="spacing-box-lr-xxxs" name="role" id="role" ref={roleRef}>
                     <option value="submitter">submitter</option>
                     <option value="project manager">project manager</option>
                     <option value="developer">developer</option>
@@ -52,7 +52,8 @@ const SignUp = () => {
 
                 <button className="btn-main spacing-box-tb-l" type="submit">Sign Up</button>
 
-                <div className="center-text">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>               
+                <div className="center-text">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>
+                <div className="spacing-box-tb-xxs center-text">Just Curious? Try a <Link className="link-main" to="/TryDemoAccount">Demo Account</Link></div>
             </form>
         </section>
     )

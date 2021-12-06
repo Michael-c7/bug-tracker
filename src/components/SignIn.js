@@ -20,10 +20,7 @@ const SignIn = () => {
         if(email && password) signInUser(email, password)
     }
 
-    let signInDemoAdmin = _ => signInUser(demoUserLoginInfo.admin.email, demoUserLoginInfo.admin.password)
-    let signInDemoProjectManger = _ => signInUser(demoUserLoginInfo.projectManager.email, demoUserLoginInfo.projectManager.password)
-    let signInDemoSubmitter = _ => signInUser(demoUserLoginInfo.submitter.email, demoUserLoginInfo.submitter.password)
-    let signInDemoDeveloper = _ => signInUser(demoUserLoginInfo.developer.email, demoUserLoginInfo.developer.password)
+    
     
 
     
@@ -45,18 +42,9 @@ const SignIn = () => {
                 <div className="spacing-box-tb-s center-text">
                     <div className="spacing-box-tb-xxs">Forgot your <Link className="center-text link-main" to="/forgotPassword">Password?</Link></div>
                     <div className="spacing-box-tb-xxs">Don't Have an Account? <Link className="link-main" to="/SignUp">Sign Up</Link></div>
+                    <div className="spacing-box-tb-xxs">Just Curious? Try a <Link className="link-main" to="/TryDemoAccount">Demo Account</Link></div>
                 </div>
             </form>
-
-            <div>
-                <h2 className="center-text form-sub-header">Try a Demo account!</h2>
-                <div className="form-column">
-                    <button className="form-item btn-secondary" onClick={() => signInDemoAdmin()}>Admin</button>
-                    <button className="form-item btn-secondary" onClick={() => signInDemoProjectManger()}>Project Manager</button>
-                    <button className="form-item btn-secondary" onClick={() => signInDemoSubmitter()}>submitter</button>
-                    <button className="form-item btn-secondary" onClick={() => signInDemoDeveloper()}>Developer</button>
-                </div>
-            </div>
         </section>
     )
 }
