@@ -13,7 +13,6 @@ const TryDemoAccount = () => {
     let signInDemoSubmitter = _ => signInUser(demoUserLoginInfo.submitter.email, demoUserLoginInfo.submitter.password)
     let signInDemoDeveloper = _ => signInUser(demoUserLoginInfo.developer.email, demoUserLoginInfo.developer.password)
 
-
     return (
         <section className="form-container center-transform">
             <h2 className="form-header center-text spacing-box-t-xl">Try a Demo account!</h2>
@@ -26,10 +25,10 @@ const TryDemoAccount = () => {
 
             <div className="spacing-box-tb-s center-text">
                 <div className="spacing-box-tb-xxs">Don't Have an Account? <Link className="link-main" to="/SignUp">Sign Up</Link></div>
-                <div className="center-text">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>
+                <div className="spacing-box-tb-xxs">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>
             </div>
         </section>
     )
 }
 
-export default TryDemoAccount
+export default TryDemoAccount;

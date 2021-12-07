@@ -1,9 +1,5 @@
-// @use "base";
-$blue-000:#3552CA;
-$red-000:#e74c3c;
-$gray-000:#F2F7FB;
-$gray-050:#BCBCC4;
-$gray-100:#A0A6B9;
+@use "base";
+
 
 // form
 .form-container {
@@ -18,7 +14,6 @@ $gray-100:#A0A6B9;
 }
 
 .form-header {
-    // margin-bottom:2rem;
     font-size:1.75rem;
     font-weight:400;
 }
@@ -47,7 +42,7 @@ $gray-100:#A0A6B9;
 .form-input {
     width:inherit;
     border:none;
-    border-bottom: 1px solid $gray-100;
+    border-bottom: 1px solid base.$gray-100;
     padding:0.5rem;
     // margin:0.75rem 0;
 }
@@ -64,7 +59,7 @@ $gray-100:#A0A6B9;
 // buttons
 .btn-main {
     border:none;
-    background-color: $blue-000;
+    background-color: base.$blue-000;
     color:#fff;
     font-size:1rem;
     padding:0.9rem;
@@ -90,7 +85,7 @@ $gray-100:#A0A6B9;
 // links
 .link-main {
     // color:var(--blue-000);
-    color:$blue-000;
+    color:base.$blue-000;
     text-decoration: underline;
 }
 

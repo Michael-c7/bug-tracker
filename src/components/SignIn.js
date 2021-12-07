@@ -1,15 +1,10 @@
 import React, { useRef } from 'react'
 import { useUserContext } from '../context/userContext'
 import { Link } from "react-router-dom";
-import demoUserLoginInfo from "../demoUserLoginInfo"
-import "../styles/components.scss";
-
-import Loading from "./Loading"
 
 const SignIn = () => {
     const emailRef = useRef()
     const passwordRef = useRef() 
-
     const { signInUser } = useUserContext()
 
     const onSubmit = e => {
@@ -18,12 +13,7 @@ const SignIn = () => {
         const password = passwordRef.current.value;
 
         if(email && password) signInUser(email, password)
-    }
-
-    
-    
-
-    
+    }  
 
     return (
         <section className="form-container center-transform">

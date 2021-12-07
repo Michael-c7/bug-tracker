@@ -1,8 +1,8 @@
-$red-000:#e74c3c;
+@use "base";
 
 .error-container {
     position: relative;
-    background-color: $red-000;
+    background-color: base.$red-000;
     color:#fff;
     padding:0.5rem 1rem;
     font-size:1.25rem;

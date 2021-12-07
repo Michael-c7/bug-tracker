@@ -1,9 +1,6 @@
 import React, { useRef } from 'react'
 import { useUserContext } from '../context/userContext';
-import "../styles/login.scss"
 import { Link } from "react-router-dom";
-  
-
 
 const SignUp = () => {
     const emailRef = useRef()
@@ -51,10 +48,12 @@ const SignUp = () => {
                 </select>
 
                 <button className="btn-main spacing-box-tb-l" type="submit">Sign Up</button>
-
-                <div className="center-text">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>
-                <div className="spacing-box-tb-xxs center-text">Just Curious? Try a <Link className="link-main" to="/TryDemoAccount">Demo Account</Link></div>
             </form>
+
+            <div className="spacing-box-tb-s center-text">
+                <div className="spacing-box-tb-xxs">Already have an account? <Link className="link-main" to="/SignIn">Sign In</Link></div>
+                <div className="spacing-box-tb-xxs">Just Curious? Try a <Link className="link-main" to="/TryDemoAccount">Demo Account</Link></div>
+            </div>
         </section>
     )
 }

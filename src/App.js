@@ -21,10 +21,12 @@ function App() {
   return (
     <div>
       {error && <ErrorMsg/>}
-      {loading ? <Loading/> : <>{user ? <Dashboard/> : (
+      {loading ? <Loading/> : <> {user ? <Dashboard/> : (
         <Router>
           <Routes>
             <Route path='/SignIn' element={<SignIn/>}/>
+
+            <Route path='/' element={<SignIn/>}/>
 
             <Route path='/SignUp' element={<SignUp/>}/>
 
@@ -43,22 +45,3 @@ function App() {
 }
 
 export default App;
-
-
-
-/*
-TODO
--
-1. style the menus
-- sign in [X]
-- sign up [X]
-- reset password forms [X]
-- proper loading animation [X]
-- error msg
-- send email reset link msg
-
-
-2. Implement roles [X]
-
-3. create the bug tracker software functionality
-*/
