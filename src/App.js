@@ -20,7 +20,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
+  Navigate
 } from "react-router-dom";
 
 function App() {
@@ -29,35 +30,29 @@ function App() {
   return (
     <div>
       <Router>
-      {error && <ErrorMsg/>}
-      {loading ? <Loading/> : <> {user ? (
-      <Routes>
-        <Route path="dashboard" element={<Dashboard/>}>
-          <Route path="home" element={<Home/>}/>
-          <Route path="Projects" element={<Projects/>}/>
-          <Route path="Tickets" element={<Tickets/>}/>
-          <Route path="ProjectManagement" element={<ProjectManagement/>}/>
-          <Route exact path='*' element={<ErrorPage/>}/>
-        </Route>
-      </Routes>
-      
-      ): (
-      <Routes>
-            <Route path='/SignIn' element={<SignIn/>}/>
-            <Route path='/' element={<SignIn/>}/>
-
-            <Route path='/SignUp' element={<SignUp/>}/>
-
-            <Route path='/ForgotPassword' element={<ForgotPassword/>}/>
-
-            <Route path='/TryDemoAccount' element={<TryDemoAccount/>}/>
-
-            <Route path='/SuccessPassword' element={<SuccessPassword/>}/>
-
-            <Route exact path='*' element={<ErrorPage/>}/>
+        {error && <ErrorMsg/>}
+        {loading ? <Loading/> : <> {user ? (
+        <Routes>
+          <Route path="dashboard" element={<Dashboard/>}>
+            <Route path="home" element={<Home/>}/>
+            <Route path="Projects" element={<Projects/>}/>
+            <Route path="Tickets" element={<Tickets/>}/>
+            <Route path="ProjectManagement" element={<ProjectManagement/>}/>
+          </Route>
+          <Route path="*" element={<Navigate to="/dashboard/home"/>}/>
         </Routes>
-      )}</>}
-        </Router>
+        
+        ) : (
+        <Routes>
+              <Route path='/SignIn' element={<SignIn/>}/>
+              <Route path='/SignUp' element={<SignUp/>}/>
+              <Route path='/ForgotPassword' element={<ForgotPassword/>}/>
+              <Route path='/TryDemoAccount' element={<TryDemoAccount/>}/>
+              <Route path='/SuccessPassword' element={<SuccessPassword/>}/>
+              <Route path="*" element={<Navigate to="/SignUp"/>}/>
+          </Routes>
+        )}</>}
+      </Router>
     </div>
   );
 }
