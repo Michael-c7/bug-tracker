@@ -1,12 +1,27 @@
 import React from 'react'
 import { useUserContext } from '../context/userContext'
-import { FaHome,FaFolderOpen, FaTicketAlt, FaProjectDiagram, FaPowerOff } from "react-icons/fa"
+import { 
+        FaHome,
+        FaFolderOpen,
+        FaTicketAlt,
+        FaProjectDiagram,
+        FaPowerOff,
+    } from "react-icons/fa"
 import { FiLogOut } from "react-icons/fi"
 import { MdManageAccounts } from "react-icons/md"
 import "../styles/dashboard.scss"
 
+import { Link, Outlet } from "react-router-dom";
+
+// components
+import Home from "./dashboard_components/Home"
+import Projects from "./dashboard_components/Projects"
+import AreYouSureMsg from './dashboard_components/AreYouSureMsg'
+
+
+
 const Dashboard = () => {
-    const { user, logoutUser, userInfo } = useUserContext()
+    const { user, logoutUser, userInfo, setModalOpen } = useUserContext()
     const { email, name, role, uid } = userInfo
 
     React.useEffect(() => {
@@ -17,30 +32,30 @@ const Dashboard = () => {
     const logout = desire => {
         logoutUser()
     }
+
     return (
         <main className="dashboard-container">
-            
-
+            <AreYouSureMsg/>
             <nav className="dashboard-sidebar">
                 <ul className="dashboard-sidebar__items">
                     <li className="dashboard-sidebar__item">
-                        <a className="dashboard-sidebar__item__icon" href="/"><FaHome/></a>
+                        <Link className="dashboard-sidebar__item__icon" to="/dashboard/Home"><FaHome/></Link>
                     </li>
 
                     <li className="dashboard-sidebar__item">
-                        <a className="dashboard-sidebar__item__icon" href="/"><FaFolderOpen/></a>
+                        <Link className="dashboard-sidebar__item__icon" to="/dashboard/Projects"><FaFolderOpen/></Link>
                     </li>
 
                     <li className="dashboard-sidebar__item">
-                        <a className="dashboard-sidebar__item__icon" href="/"><FaTicketAlt/></a>
+                        <Link className="dashboard-sidebar__item__icon" to="/dashboard/Tickets"><FaTicketAlt/></Link>
                     </li>
 
                     <li className="dashboard-sidebar__item">
-                        <a className="dashboard-sidebar__item__icon" href="/"><MdManageAccounts/></a>
+                        <Link className="dashboard-sidebar__item__icon" to="/dashboard/ProjectManagement"><MdManageAccounts/></Link>
                     </li>
 
-                    <li className="dashboard-sidebar__item" onClick={() => alert("Are you sure you want to log out?")}>
-                        <a className="dashboard-sidebar__item__icon" href="/"><FiLogOut/></a>
+                    <li className="dashboard-sidebar__item" onClick={() => setModalOpen(true)}>
+                        <button className="dashboard-sidebar__item__icon remove-btn-default-styles" href="/"><FiLogOut/></button>
                     </li>
                 </ul>
             </nav>
@@ -51,7 +66,7 @@ const Dashboard = () => {
                     <h2>Role: {role ? role : "Loading Role..."}</h2>
                 </nav>
                 <div className="dashboard__inner">
-                    <h2>Dashboard</h2>
+                    <Outlet/>
                 </div>
             </section>
 

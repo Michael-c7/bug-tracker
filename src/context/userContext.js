@@ -24,6 +24,8 @@ export const UserContextProvider = ({children}) => {
     const [error, setError] = useState("")
     const [userInfo, setUserInfo] = useState({})
 
+    const [modalOpen, setModalOpen] = useState(false);
+
 
 
     useEffect(() => {
@@ -141,6 +143,7 @@ export const UserContextProvider = ({children}) => {
         logoutUser,
         forgotPassword,
         userInfo,
+        modalOpen, setModalOpen,
     }
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const tickets = () => {
+const Tickets = () => {
     return (
         <div>
             <h2>tickets tab</h2>
@@ -8,4 +8,4 @@ const tickets = () => {
     )
 }
 
-export default tickets
+export default Tickets
