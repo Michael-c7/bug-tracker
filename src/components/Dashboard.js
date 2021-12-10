@@ -51,11 +51,11 @@ const Dashboard = () => {
                     </li>
 
                     <li className="dashboard-sidebar__item">
-                        <Link className="dashboard-sidebar__item__icon" to="/dashboard/ProjectManagement"><MdManageAccounts/></Link>
+                        <Link className="dashboard-sidebar__item__icon" to="/dashboard/RoleManagement"><MdManageAccounts/></Link>
                     </li>
 
                     <li className="dashboard-sidebar__item" onClick={() => setModalOpen(true)}>
-                        <button className="dashboard-sidebar__item__icon remove-btn-default-styles" href="/"><FiLogOut/></button>
+                        <button className="dashboard-sidebar__item__icon remove-btn-default-styles"><FiLogOut/></button>
                     </li>
                 </ul>
             </nav>

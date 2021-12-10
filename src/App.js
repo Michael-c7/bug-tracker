@@ -12,7 +12,7 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/dashboard_components/Home";
 import Projects from "./components/dashboard_components/Projects";
 import Tickets from "./components/dashboard_components/Tickets";
-import ProjectManagement from "./components/dashboard_components/ProjectManagement";
+import RoleManagement from "./components/dashboard_components/RoleManagement";
 
 
 import { useUserContext } from "./context/userContext";
@@ -37,19 +37,18 @@ function App() {
             <Route path="home" element={<Home/>}/>
             <Route path="Projects" element={<Projects/>}/>
             <Route path="Tickets" element={<Tickets/>}/>
-            <Route path="ProjectManagement" element={<ProjectManagement/>}/>
+            <Route path="RoleManagement" element={<RoleManagement/>}/>
           </Route>
           <Route path="*" element={<Navigate to="/dashboard/home"/>}/>
         </Routes>
-        
         ) : (
-        <Routes>
-              <Route path='/SignIn' element={<SignIn/>}/>
-              <Route path='/SignUp' element={<SignUp/>}/>
-              <Route path='/ForgotPassword' element={<ForgotPassword/>}/>
-              <Route path='/TryDemoAccount' element={<TryDemoAccount/>}/>
-              <Route path='/SuccessPassword' element={<SuccessPassword/>}/>
-              <Route path="*" element={<Navigate to="/SignUp"/>}/>
+          <Routes>
+            <Route path="/SignIn" element={<SignIn/>}/>
+            <Route path="/SignUp" element={<SignUp/>}/>
+            <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
+            <Route path="/TryDemoAccount" element={<TryDemoAccount/>}/>
+            <Route path="/SuccessPassword" element={<SuccessPassword/>}/>
+            <Route path="*" element={<Navigate to="/SignIn"/>}/>
           </Routes>
         )}</>}
       </Router>
