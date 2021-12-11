@@ -1,0 +1,50 @@
+@use "../base.scss";
+
+
+.top {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top:2rem;
+}
+
+
+
+
+// table
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+
+    margin:0.25rem 0;
+  }
+
+  table a {
+      color:base.$blue-000;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+
+
+  .bottom {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+} 
+
+.page-btns > * {
+    margin:0.25rem;
+    padding:0.25rem 0.5rem;
+    cursor: pointer;
+}

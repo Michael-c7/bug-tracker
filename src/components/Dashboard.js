@@ -28,11 +28,6 @@ const Dashboard = () => {
         console.log(userInfo)
     }, [])
 
-
-    const logout = desire => {
-        logoutUser()
-    }
-
     return (
         <main className="dashboard-container">
             <AreYouSureMsg/>
