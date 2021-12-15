@@ -5,7 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import "../../styles/dashboard_styles/logoutMsg.scss";
 
 const LogoutMsg = () => {
-    const { logoutModal, setLogoutModal, logout } = useUserContext()
+    const { logoutModal, setLogoutModal, logoutUser } = useUserContext()
 
     const closeModal = e => {
         if (e.target.closest(".modal__close-btn") ||
@@ -14,16 +14,20 @@ const LogoutMsg = () => {
           }
     }
 
+    const logout = e => {
+        e.preventDefault();
+        setLogoutModal(false)
+        logoutUser()
+    }
+
     return (
-        <section className={`modal-container ${logoutModal ? "show" : "hide"}`} onClick={() => closeModal(false)}>
-            <div className="form-container center-transform modal" onClick={() => closeModal(false)}>
+        <section className={`modal-container ${logoutModal ? "show" : "hide"}`} onClick={closeModal}>
+            <div className="form-container center-transform modal" onClick={closeModal}>
                 <button className="modal__close-btn"><FaTimes/></button>
-                <div className="modal-input-container">
-                    <h2>Are you sure you want to logout?</h2>
-                    <button className="btn-main" onClick={logout}>
-                        <Link to="/SignIn">Logout</Link>
-                    </button>
-                </div>
+
+                <h2 className="center-text spacing-box-tb-m">Are you sure you want to logout?</h2>
+
+                <Link className="center-text logout-btn"  to="/SignIn" onClick={logout}>Logout</Link>
             </div>
         </section>
     )

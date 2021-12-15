@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { collection, doc, setDoc, getDocs } from "firebase/firestore"; 
+import { auth, db } from "../../firebase"
 import { useUserContext } from '../../context/userContext'
 import { FaTimes } from "react-icons/fa";
 import "../../styles/dashboard_styles/modal.scss"
 
 
 const Modal = () => {
-    const { projectModal, setProjectModal } = useUserContext()
+    let [users, setUsers] = React.useState([])
+    let [userOptions, setUserOptions] = []
+    const nameRef = useRef()
+    const descriptionRef = useRef()
+    const teamMembersRef = useRef()
+
+    const { projectModal, setProjectModal, getAllUsers } = useUserContext()
 
     const closeModal = e => {
         if (e.target.closest(".modal__close-btn") ||
@@ -13,6 +21,32 @@ const Modal = () => {
             setProjectModal(false)
           }
     }
+
+    // const closeModal = (event, btnClass, modalClass, closeState) => {
+    //     if (event.target.closest(btnClass) ||
+    //         !event.target.closest(modalClass)) {
+    //             closeState(false)
+    //       }
+    // }
+
+    
+
+    React.useEffect(() => {
+        getAllUsers().then((data) => {
+            setUsers(data)
+        })
+    }, [])
+
+    React.useEffect(() => {
+        console.log(users)
+        const x = users.map((user) => {
+            return user.name
+        })
+        console.log(x)
+        document.querySelector(".modal-select").innerHTML += <option value="john smith">john smith</option>
+    }, [users])
+
+    // <option value="aamir khan ">aamir khan </option>
 
     return (
         <section className={`modal-container ${projectModal ? "show" : "hide"}`} onClick={closeModal}>
@@ -27,11 +61,16 @@ const Modal = () => {
                     <textarea className="modal__input" id="project-description" name="project-description" type="text" placeholder="Enter Project Description" required/>
 
                     <label className="modal__label" htmlFor="team-members">Add Team Members</label>
-                    <select className="modal__input" name="team-members" id="team-members" multiple>
-                        <option value="john smith">john smith</option>
-                        <option value="aamir khan ">aamir khan </option>
-                        <option value="fatima ali">fatima ali</option>
-                        <option value="steve baker">steve baker</option>
+                    <select className="modal__input modal-select" name="team-members" id="team-members" multiple required>
+                        {/* <option value="john smith">john smith</option> */}
+                        {/* {users ? `${users.map((user) => {
+                            const {email, name, role, uid} = user;
+                            console.log(user)
+                            return <option value={uid}>{name}</option>
+                        })}` :  <option value="no value">no value</option>} */}
+                        {/* {users ? {} : ""} */}
+                        {/* <option value="john smith">john smith</option> */}
+
                     </select>
                 </div>
 

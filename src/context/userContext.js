@@ -107,7 +107,6 @@ export const UserContextProvider = ({children}) => {
                     /*checking if object of values exists and if the current objects uid value(the unique user id) is equal to signed in users uid*/
                     if(thing["_document"].data.value.mapValue.fields && thing["_document"].data.value.mapValue.fields.uid.stringValue === res.user.uid) {
                         let currentInfo = thing["_document"].data.value.mapValue.fields;
-                        console.log(currentInfo)
                         setUserInfo({
                             email:currentInfo.email.stringValue,
                             name:currentInfo.name.stringValue,
@@ -136,6 +135,27 @@ export const UserContextProvider = ({children}) => {
 
 
 
+    const createProject = (name, description, teamMembers) => {
+
+    }
+
+    const getAllUsers = () => {
+        return getDocs(collection(db, "users")).then((item) => {
+            let users = item.docs.map((thing) => {
+                let userInfo = thing["_document"].data.value.mapValue.fields;
+                return {
+                    email:userInfo.email.stringValue,
+                    name:userInfo.name.stringValue,
+                    role:userInfo.role.stringValue,
+                    uid:userInfo.uid.stringValue,
+                }
+            })
+            return users;
+        })
+    }
+
+
+
     const contextValue = {
         user,
         loading,
@@ -148,6 +168,7 @@ export const UserContextProvider = ({children}) => {
         logoutModal, setLogoutModal,
         projectModal, setProjectModal,
         ticketModal, setTicketModal,
+        getAllUsers,
     }
 
 

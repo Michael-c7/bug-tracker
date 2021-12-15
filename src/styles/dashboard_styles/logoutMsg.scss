@@ -1,2 +1,12 @@
 @use "src/styles/base";
 @use "src/styles/components";
+
+.logout-btn {
+    border:none;
+    background:base.$red-000;
+    color:#fff;
+    font-size:1.25rem;
+    padding:0.9rem;
+    border-radius:3px;
+    cursor:pointer;
+}

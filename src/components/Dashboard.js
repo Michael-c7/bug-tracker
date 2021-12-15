@@ -27,9 +27,9 @@ const Dashboard = () => {
     const [showModal, setShowModal] = React.useState(false)
 
 
-    React.useEffect(() => {
-        console.log(userInfo)
-    }, [])
+    // React.useEffect(() => {
+    //     console.log(userInfo)
+    // }, [])
 
     return (
         <main className="dashboard-container">
