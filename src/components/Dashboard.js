@@ -16,13 +16,16 @@ import { Link, Outlet } from "react-router-dom";
 // components
 import Home from "./dashboard_components/Home"
 import Projects from "./dashboard_components/Projects"
-import AreYouSureMsg from './dashboard_components/AreYouSureMsg'
+import LogoutMsg from './dashboard_components/LogoutMsg'
+import Modal from "./dashboard_components/Modal"
 
 
 
 const Dashboard = () => {
-    const { user, logoutUser, userInfo, setModalOpen } = useUserContext()
-    const { email, name, role, uid } = userInfo
+    const { user, logoutUser, userInfo, logoutModal, setLogoutModal } = useUserContext()
+    const { email, name, role, uid } = userInfo;
+    const [showModal, setShowModal] = React.useState(false)
+
 
     React.useEffect(() => {
         console.log(userInfo)
@@ -30,7 +33,8 @@ const Dashboard = () => {
 
     return (
         <main className="dashboard-container">
-            <AreYouSureMsg/>
+            <LogoutMsg/>
+            <Modal showModal={showModal} setShowModal={setShowModal}/>
             <nav className="dashboard-sidebar">
                 <ul className="dashboard-sidebar__items">
                     <li className="dashboard-sidebar__item">
@@ -49,7 +53,7 @@ const Dashboard = () => {
                         <Link className="dashboard-sidebar__item__icon" to="/dashboard/RoleManagement"><MdManageAccounts/></Link>
                     </li>
 
-                    <li className="dashboard-sidebar__item" onClick={() => setModalOpen(true)}>
+                    <li className="dashboard-sidebar__item" onClick={() => setLogoutModal(true)}>
                         <button className="dashboard-sidebar__item__icon remove-btn-default-styles"><FiLogOut/></button>
                     </li>
                 </ul>
@@ -57,7 +61,7 @@ const Dashboard = () => {
 
             <section className="dashboard">
                 <nav className="dashboard__navbar">
-                    <h2>Logged in as: {name ? name : "Loading Name..."}</h2>
+                    <h2>Logged in as: {name ? name : "Loading Name..."} ({email ? email : "Loading Email..."})</h2>
                     <h2>Role: {role ? role : "Loading Role..."}</h2>
                 </nav>
                 <div className="dashboard__inner">

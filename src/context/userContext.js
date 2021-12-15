@@ -23,8 +23,10 @@ export const UserContextProvider = ({children}) => {
     const [loading, setLoading] = useState()
     const [error, setError] = useState("")
     const [userInfo, setUserInfo] = useState({})
-
-    const [modalOpen, setModalOpen] = useState(false);
+    // modals
+    const [logoutModal, setLogoutModal] = useState(false);
+    const [projectModal, setProjectModal] = useState(false);
+    const [ticketModal, setTicketModal] = useState(false);
 
 
 
@@ -143,7 +145,9 @@ export const UserContextProvider = ({children}) => {
         logoutUser,
         forgotPassword,
         userInfo,
-        modalOpen, setModalOpen,
+        logoutModal, setLogoutModal,
+        projectModal, setProjectModal,
+        ticketModal, setTicketModal,
     }
 
 

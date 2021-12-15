@@ -1,16 +1,15 @@
 import React from 'react'
-
+import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
 
 const Projects = () => {
+    const { projectModal, setProjectModal } = useUserContext()
+
     return (
         <section className='projects'>
             <h2 className="dashboard__heading">Projects</h2>
-
-
-            <button className='btn-main'>Create a Project</button>
-
+            <button className='btn-main spacing-box-tb-m' onClick={() => setProjectModal(!projectModal)}>Create a Project</button>
             <section className="dashboard-table">
                 {/*top: # of entries filter & search input*/}
                 <div className="top">
@@ -72,7 +71,6 @@ const Projects = () => {
                         <button>2</button>
                         <button>3</button>
                         <button>Next</button>
-
                     </div>
                 </div>
             </section>
