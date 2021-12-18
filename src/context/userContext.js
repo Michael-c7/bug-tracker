@@ -9,7 +9,7 @@ import {
     reload,
  } from "firebase/auth";
 
-import { collection, addDoc, getDocs  } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, doc, setDoc  } from "firebase/firestore"; 
 
 import { auth, db } from "../firebase"
 
@@ -134,9 +134,39 @@ export const UserContextProvider = ({children}) => {
     }
 
 
+    /*data parameter should be an object containing
+    1. project name
+    2. project description
+    3. team members on the project
+    */
+    const setProjectData = async (data) => {
+        const {name, description, teamMembers} = data;
 
-    const createProject = (name, description, teamMembers) => {
+        // creating / adding the info the database
+        addDoc(collection(db, "projects"), {
+            name,
+            description,
+            teamMembers,
+          }).then(res => console.log(res))
+          .catch((error) => setError(error)) 
+    }
 
+
+    const getProjectData = () => {
+        // return getDocs(collection(db, "projects")).then((item) => {
+        //     let users = item.docs.map((thing) => {
+        //         let userInfo = thing["_document"].data.value.mapValue.fields;
+        //         console.log(userInfo)
+        //         // return {
+        //         //     email:userInfo.email.stringValue,
+        //         //     name:userInfo.name.stringValue,
+        //         //     role:userInfo.role.stringValue,
+        //         //     uid:userInfo.uid.stringValue,
+        //         // }
+        //     })
+        //     return users;
+        // })
+        console.log("sifgjdfoigSGDTH")
     }
 
     const getAllUsers = () => {
@@ -169,6 +199,8 @@ export const UserContextProvider = ({children}) => {
         projectModal, setProjectModal,
         ticketModal, setTicketModal,
         getAllUsers,
+        setProjectData,
+        getProjectData,
     }
 
 

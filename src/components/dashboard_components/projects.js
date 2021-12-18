@@ -4,7 +4,12 @@ import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
 
 const Projects = () => {
-    const { projectModal, setProjectModal } = useUserContext()
+    const { projectModal, setProjectModal, getProjectData } = useUserContext()
+
+
+    React.useEffect(() => {
+        getProjectData()
+    }, [])
 
     return (
         <section className='projects'>
@@ -32,33 +37,33 @@ const Projects = () => {
                 </div>
                 {/*middle: the table*/}
                 <table>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Description</th>
-                        <th>Created</th>
-                        <th></th>
-                    </tr>
-                    {/*entries data here*/}
-                    <tr>
-                        <td>project 12</td>
-                        <td>another  description</td>
-                        <td>Feb 24 2019</td>
-                        <td><a href="/">Details</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>my project xyz</td>
-                        <td>a longer test description</td>
-                        <td>Apr 15, 2020</td>
-                        <td><a href="/">Details</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>the 3rd test project</td>
-                        <td>a longer test description 3</td>
-                        <td>Jan 17, 2021</td>
-                        <td><a href="/">Details</a></td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Description</th>
+                            <th>Created</th>
+                            <th></th>
+                        </tr>
+                        {/*entries data here*/}
+                        <tr>
+                            <td>project 12</td>
+                            <td>another  description</td>
+                            <td>Feb 24 2019</td>
+                            <td><a href="/">Details</a></td>
+                        </tr>
+                        <tr>
+                            <td>my project xyz</td>
+                            <td>a longer test description</td>
+                            <td>Apr 15, 2020</td>
+                            <td><a href="/">Details</a></td>
+                        </tr>
+                        <tr>
+                            <td>the 3rd test project</td>
+                            <td>a longer test description 3</td>
+                            <td>Jan 17, 2021</td>
+                            <td><a href="/">Details</a></td>
+                        </tr>
+                    </tbody>
                 </table>
 
 
