@@ -27,6 +27,8 @@ export const UserContextProvider = ({children}) => {
     const [logoutModal, setLogoutModal] = useState(false);
     const [projectModal, setProjectModal] = useState(false);
     const [ticketModal, setTicketModal] = useState(false);
+    // table data
+    const [projectTableData, setProjectTableData] = useState([]);
 
 
 
@@ -140,33 +142,43 @@ export const UserContextProvider = ({children}) => {
     3. team members on the project
     */
     const setProjectData = async (data) => {
-        const {name, description, teamMembers} = data;
+        const {name, description, teamMembers, dateCreated} = data;
 
         // creating / adding the info the database
         addDoc(collection(db, "projects"), {
             name,
             description,
             teamMembers,
+            dateCreated,
+
           }).then(res => console.log(res))
           .catch((error) => setError(error)) 
     }
 
 
     const getProjectData = () => {
-        // return getDocs(collection(db, "projects")).then((item) => {
-        //     let users = item.docs.map((thing) => {
-        //         let userInfo = thing["_document"].data.value.mapValue.fields;
-        //         console.log(userInfo)
-        //         // return {
-        //         //     email:userInfo.email.stringValue,
-        //         //     name:userInfo.name.stringValue,
-        //         //     role:userInfo.role.stringValue,
-        //         //     uid:userInfo.uid.stringValue,
-        //         // }
-        //     })
-        //     return users;
-        // })
-        console.log("sifgjdfoigSGDTH")
+         return getDocs(collection(db, "projects")).then((item) => {
+            let projects = item.docs.map((thing) => {
+                let projectInfo = thing["_document"].data.value.mapValue.fields;
+                const description = projectInfo.description.stringValue;
+                const name = projectInfo.name.stringValue;
+                const dateCreated = projectInfo.dateCreated.stringValue;
+
+                const teamMembers = projectInfo.teamMembers.arrayValue.values.map((item) => {
+                    const name = item.mapValue.fields.name.stringValue;
+                    const uid = item.mapValue.fields.uid.stringValue;
+                    return {name, uid};
+                });
+
+                return {
+                    name,
+                    description,
+                    teamMembers,
+                    dateCreated,
+                }
+            })
+            return projects;
+        })
     }
 
     const getAllUsers = () => {
@@ -184,6 +196,23 @@ export const UserContextProvider = ({children}) => {
         })
     }
 
+    const getTodaysDate = _ => {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd < 10) {
+            dd='0'+dd
+        } 
+
+        if(mm < 10) {
+            mm='0'+mm
+        } 
+
+        return today = mm+'/'+dd+'/'+yyyy;
+    }
+
 
 
     const contextValue = {
@@ -199,8 +228,9 @@ export const UserContextProvider = ({children}) => {
         projectModal, setProjectModal,
         ticketModal, setTicketModal,
         getAllUsers,
-        setProjectData,
-        getProjectData,
+        setProjectData, getProjectData,
+        projectTableData, setProjectTableData,
+        getTodaysDate,
     }
 
 

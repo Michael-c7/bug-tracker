@@ -9,11 +9,17 @@ import "../../styles/dashboard_styles/modal.scss"
 const Modal = () => {
     let [users, setUsers] = React.useState([])
     let [selectOptions, setSelectOptions] = React.useState([])
-    const nameRef = useRef()
-    const descriptionRef = useRef()
+    let nameRef = useRef()
+    let descriptionRef = useRef()
     const teamMembersRef = useRef()
 
-    const { projectModal, setProjectModal, getAllUsers, setProjectData } = useUserContext()
+    const { 
+        projectModal, setProjectModal,
+        getAllUsers, setProjectData,
+        getTodaysDate,
+        getProjectData,
+        setProjectTableData,
+    } = useUserContext()
 
     const closeModal = e => {
         e.preventDefault()
@@ -28,13 +34,23 @@ const Modal = () => {
             name:nameRef.current.value,
             description:descriptionRef.current.value,
             teamMembers:selectOptions.multiValue.map(str => JSON.parse(str)),
+            dateCreated:getTodaysDate(),
         }
         setProjectData(createProjectData)
         // console.log(createProjectData)
 
         // close modal
         setProjectModal(false)
+
+        // clear the inputs
+        nameRef.current.value = "";
+        descriptionRef.current.value = "";
+
         // get the projects data
+        getProjectData().then((projects) => {
+            setProjectTableData(projects)
+        })
+        
     }
 
     // const closeModal = (event, buttonClass, modalClass, closeState) => {
