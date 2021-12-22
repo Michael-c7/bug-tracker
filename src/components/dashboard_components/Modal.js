@@ -11,7 +11,7 @@ const Modal = () => {
     let [selectOptions, setSelectOptions] = React.useState([])
     let nameRef = useRef()
     let descriptionRef = useRef()
-    const teamMembersRef = useRef()
+    let teamMembersRef = useRef()
 
     const { 
         projectModal, setProjectModal,
@@ -45,6 +45,7 @@ const Modal = () => {
         // clear the inputs
         nameRef.current.value = "";
         descriptionRef.current.value = "";
+        teamMembersRef.current.value = "";
 
         // get the projects data
         getProjectData().then((projects) => {
@@ -85,7 +86,7 @@ const Modal = () => {
                     <select className="modal__input modal-select" name="team-members" id="team-members" multiple ref={teamMembersRef} onChange={getTeamMembers}>
                         {users.map((user, index) => {
                             return (
-                                <option value={JSON.stringify({name:user.name,uid:user.uid})} key={index}>{user.name} ({user.email})</option>
+                                <option value={JSON.stringify({name:user.name, uid:user.uid})} key={index}>{user.name} ({user.email})</option>
                             )
                         })}
                     </select>

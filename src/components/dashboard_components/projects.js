@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
 
 const Projects = () => {
+    const [amountOfEntriesState, SetAmountOfEntriesState] = useState(10)
+    let [projectTableIndex, setProjectTableIndex] = useState(0)
+    const [totalAmountEntries, setTotalAmountEntries] = useState(0)
+    const amountOfEntriesRef = useRef();
+    const searchTableRef = useRef();
+
+
     const { 
         projectModal, setProjectModal,
         getProjectData,
@@ -11,11 +18,43 @@ const Projects = () => {
     } = useUserContext()
 
 
+    // React.useEffect(() => {
+    //     getProjectData().then((projects) => {
+    //         setProjectTableData(projects)
+    //     })
+    // }, [])
+
     React.useEffect(() => {
         getProjectData().then((projects) => {
-            setProjectTableData(projects)
+            let size = amountOfEntriesState;
+            let arrayOfArrays = [];
+            for (var i = 0; i < projects.length; i += size) {
+                arrayOfArrays.push(projects.slice(i, i + size));
+            }
+            if(projects) {
+                setProjectTableData(arrayOfArrays)
+                // setProjectTableIndex(0)
+                setTotalAmountEntries(projects.length)
+            }
         })
-    }, [])
+    }, [amountOfEntriesState, projectTableData.length, projectTableIndex])
+
+
+    const nextSlide = (stateValue, amountToChangeValue) => {
+        if(projectTableIndex === projectTableData.length) {
+            setProjectTableIndex(0)
+        } else {
+            setProjectTableIndex(setProjectTableIndex++)
+        }
+    }
+
+    const prevSlide = (stateValue, amountToChangeValue) => {
+        if(projectTableIndex === 0) {
+            setProjectTableIndex(projectTableData.length)
+        } else {
+            setProjectTableIndex(setProjectTableIndex++)
+        }
+    }
 
     return (
         <section className='projects'>
@@ -27,7 +66,7 @@ const Projects = () => {
                     <div className="entries">
                         <span>Show </span> 
                         <label>
-                            <select name="amount-of-entries">
+                            <select name="amount-of-entries" ref={amountOfEntriesRef} onChange={() => SetAmountOfEntriesState(Number(amountOfEntriesRef.current.value))}>
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
@@ -51,13 +90,13 @@ const Projects = () => {
                             <th>Details</th>
                         </tr>
                         {/*entries data here*/}
-                        
-                        {projectTableData?.map((project, index) => {
+                        {projectTableData[projectTableIndex]?.map((project, index) => {
                             const {name, description, dateCreated} = project;
+                            // console.log(projectTableData[projectTableIndex].length)
                             return (
                                 <tr key={index}>
-                                    <td>{name}</td>
-                                    <td>{description.length <= 200 ? description : `${description.slice(0,200)}...`}</td>
+                                    <td>{name ? `${name.length <= 25 ? name : `${name.slice(0,25).trim()}...`}` : "N/A"}</td>
+                                    <td>{description ? `${description.length <= 200 ? description : `${description.slice(0,200).trim()}...`}` : "N/A"}</td>
                                     <td>{dateCreated ? dateCreated : "N/A"}</td>
                                     <td><a href="/">Details</a></td>
                                 </tr>
@@ -65,17 +104,17 @@ const Projects = () => {
                         })}
                     </tbody>
                 </table>
-
-
                 {/*bottom: showing entires & prev, next buttons*/}
                 <div className="bottom">
-                    <div>Showing 1 to 4 of 4 entries</div>
+                    <div>Showing 1 to {projectTableData[projectTableIndex]?.length} of {totalAmountEntries} entries</div>
                     <div className="page-btns">
-                        <button>Prev</button>
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <button>Next</button>
+                        <button onClick={() => prevSlide()}>Prev</button>
+                        {projectTableData.map((item, index) => {
+                            return (
+                            <button key={index} onClick={() => setProjectTableIndex(index)}>{index + 1}</button>
+                            )
+                        })}
+                        <button onClick={() => nextSlide()}>Next</button>
                     </div>
                 </div>
             </section>
