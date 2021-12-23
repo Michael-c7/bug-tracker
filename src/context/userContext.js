@@ -209,8 +209,25 @@ export const UserContextProvider = ({children}) => {
         if(mm < 10) {
             mm='0'+mm
         } 
-
         return today = mm+'/'+dd+'/'+yyyy;
+    }
+
+
+    // projectTableIndex, setProjectTableIndex, projectTableData
+    const nextSlide = (indexState, setIndexState , tableData) => {
+        if(indexState === tableData.length - 1) {
+            setIndexState(0)
+        } else {
+            setIndexState(indexState + 1)
+        }
+    }
+
+    const prevSlide = (indexState, setIndexState , tableData) => {
+        if(indexState === 0) {
+            setIndexState(tableData.length - 1)
+        } else {
+            setIndexState(indexState - 1)
+        }
     }
 
 
@@ -231,6 +248,7 @@ export const UserContextProvider = ({children}) => {
         setProjectData, getProjectData,
         projectTableData, setProjectTableData,
         getTodaysDate,
+        nextSlide, prevSlide,
     }
 
 

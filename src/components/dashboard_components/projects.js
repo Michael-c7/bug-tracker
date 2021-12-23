@@ -2,27 +2,23 @@ import React, { useRef, useState } from 'react'
 import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
+import { FaSortUp, FaSortDown, FaSort } from 'react-icons/fa';
 
 const Projects = () => {
     const [amountOfEntriesState, SetAmountOfEntriesState] = useState(10)
     let [projectTableIndex, setProjectTableIndex] = useState(0)
     const [totalAmountEntries, setTotalAmountEntries] = useState(0)
+    const [searchInput, setSearchInput] = useState("")
+    // refs
     const amountOfEntriesRef = useRef();
     const searchTableRef = useRef();
-
 
     const { 
         projectModal, setProjectModal,
         getProjectData,
         projectTableData, setProjectTableData,
+        nextSlide, prevSlide,
     } = useUserContext()
-
-
-    // React.useEffect(() => {
-    //     getProjectData().then((projects) => {
-    //         setProjectTableData(projects)
-    //     })
-    // }, [])
 
     React.useEffect(() => {
         getProjectData().then((projects) => {
@@ -31,30 +27,37 @@ const Projects = () => {
             for (var i = 0; i < projects.length; i += size) {
                 arrayOfArrays.push(projects.slice(i, i + size));
             }
+            
             if(projects) {
                 setProjectTableData(arrayOfArrays)
-                // setProjectTableIndex(0)
                 setTotalAmountEntries(projects.length)
+            }
+
+            if(projectTableData.length <= 1) {
+                setProjectTableIndex(0)
             }
         })
     }, [amountOfEntriesState, projectTableData.length, projectTableIndex])
 
 
-    const nextSlide = (stateValue, amountToChangeValue) => {
-        if(projectTableIndex === projectTableData.length) {
-            setProjectTableIndex(0)
-        } else {
-            setProjectTableIndex(setProjectTableIndex++)
-        }
+    React.useEffect(() => {
+        console.log(searchInput)
+    }, [searchInput])
+
+
+    const filterBySearch = (textInput, filterType, tableData) => {
+        // get project data
+        console.log(...tableData)
+        // separate data by type eg:name,description, ect...
+
+        // split by word into an array by filterType
+
+        // set the data as the project data
     }
 
-    const prevSlide = (stateValue, amountToChangeValue) => {
-        if(projectTableIndex === 0) {
-            setProjectTableIndex(projectTableData.length)
-        } else {
-            setProjectTableIndex(setProjectTableIndex++)
-        }
-    }
+    React.useEffect(() => {
+        filterBySearch(searchInput,"everything",projectTableData)
+    }, [projectTableData])
 
     return (
         <section className='projects'>
@@ -75,9 +78,19 @@ const Projects = () => {
                         </label>
                         <span> entries</span>
                     </div>
-                    <div>
+                    <div className="search-container">
                         <label htmlFor="search-table">Search: </label>
-                        <input type="search"/>
+                        <div className="search">
+                            <input className="search-input-text" type="search" ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
+                            <label className="search-input-filter">
+                                <select name="amount-of-entries">
+                                    <option value="everything">everything</option>
+                                    <option value="name">name</option>
+                                    <option value="description">description</option>
+                                    <option value="date">date</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 {/*middle: the table*/}
@@ -92,7 +105,6 @@ const Projects = () => {
                         {/*entries data here*/}
                         {projectTableData[projectTableIndex]?.map((project, index) => {
                             const {name, description, dateCreated} = project;
-                            // console.log(projectTableData[projectTableIndex].length)
                             return (
                                 <tr key={index}>
                                     <td>{name ? `${name.length <= 25 ? name : `${name.slice(0,25).trim()}...`}` : "N/A"}</td>
@@ -108,13 +120,13 @@ const Projects = () => {
                 <div className="bottom">
                     <div>Showing 1 to {projectTableData[projectTableIndex]?.length} of {totalAmountEntries} entries</div>
                     <div className="page-btns">
-                        <button onClick={() => prevSlide()}>Prev</button>
+                        <button onClick={() => prevSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Prev</button>
                         {projectTableData.map((item, index) => {
                             return (
                             <button key={index} onClick={() => setProjectTableIndex(index)}>{index + 1}</button>
                             )
                         })}
-                        <button onClick={() => nextSlide()}>Next</button>
+                        <button onClick={() => nextSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Next</button>
                     </div>
                 </div>
             </section>
@@ -122,4 +134,4 @@ const Projects = () => {
     )
 }
 
-export default Projects
+export default Projects;
