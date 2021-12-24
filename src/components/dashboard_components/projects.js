@@ -41,13 +41,13 @@ const Projects = () => {
 
 
     React.useEffect(() => {
-        console.log(searchInput)
+        // console.log(searchInput)
     }, [searchInput])
 
 
     const filterBySearch = (textInput, filterType, tableData) => {
         // get project data
-        console.log(...tableData)
+        // console.log(...tableData)
         // separate data by type eg:name,description, ect...
 
         // split by word into an array by filterType
@@ -56,7 +56,7 @@ const Projects = () => {
     }
 
     React.useEffect(() => {
-        filterBySearch(searchInput,"everything",projectTableData)
+        filterBySearch(searchInput, "everything", projectTableData)
     }, [projectTableData])
 
     return (
@@ -79,9 +79,11 @@ const Projects = () => {
                         <span> entries</span>
                     </div>
                     <div className="search-container">
-                        <label htmlFor="search-table">Search: </label>
+                        
                         <div className="search">
-                            <input className="search-input-text" type="search" ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
+                            <label>
+                                <input className="search-input-text" type="search" placeholder="Search..." ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
+                            </label>
                             <label className="search-input-filter">
                                 <select name="amount-of-entries">
                                     <option value="everything">everything</option>

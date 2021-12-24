@@ -47,10 +47,12 @@ const Modal = () => {
         descriptionRef.current.value = "";
         teamMembersRef.current.value = "";
 
+        /*restart the control flow, figure out why this is here*/
+
         // get the projects data
-        getProjectData().then((projects) => {
-            setProjectTableData(projects)
-        })
+        // getProjectData().then((projects) => {
+        //     setProjectTableData(projects)
+        // })
         
     }
 
