@@ -56,7 +56,8 @@ const Projects = () => {
     }
 
     React.useEffect(() => {
-        filterBySearch(searchInput, "everything", projectTableData)
+        // filterBySearch(searchInput, "everything", projectTableData)
+        console.log(projectTableData)
     }, [projectTableData])
 
     return (
