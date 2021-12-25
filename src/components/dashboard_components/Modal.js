@@ -37,7 +37,6 @@ const Modal = () => {
             dateCreated:getTodaysDate(),
         }
         setProjectData(createProjectData)
-        // console.log(createProjectData)
         // close modal
         setProjectModal(false)
         // clear the inputs

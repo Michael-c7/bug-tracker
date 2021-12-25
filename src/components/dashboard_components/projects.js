@@ -20,12 +20,14 @@ const Projects = () => {
         nextSlide, prevSlide,
     } = useUserContext()
 
+/*sub-divide the original array into multiple arrays
+ to based on how many entires the user wants to show*/
     React.useEffect(() => {
         getProjectData().then((projects) => {
             let size = amountOfEntriesState;
             let arrayOfArrays = [];
             for (var i = 0; i < projects.length; i += size) {
-                arrayOfArrays.push(projects.slice(i, i + size));
+                arrayOfArrays.push(projects.reverse().slice(i, i + size));
             }
             
             if(projects) {
@@ -38,27 +40,29 @@ const Projects = () => {
             }
         })
     }, [amountOfEntriesState, projectTableData.length, projectTableIndex])
+    
 
+    const searchTable = (usersSearch, tableData) => {
+        const filteredData = [];
+        for(var i = 0; i < tableData.length; i++) {
+            usersSearch = usersSearch.toLowerCase();
+            var name = tableData[i].name.toLowerCase();
 
-    React.useEffect(() => {
-        // console.log(searchInput)
-    }, [searchInput])
-
-
-    const filterBySearch = (textInput, filterType, tableData) => {
-        // get project data
-        // console.log(...tableData)
-        // separate data by type eg:name,description, ect...
-
-        // split by word into an array by filterType
-
-        // set the data as the project data
+            if(name.includes(usersSearch)) {
+                filteredData.push(tableData[i])
+            }
+        }
+        console.log(filteredData)
+        return filteredData;
     }
 
     React.useEffect(() => {
-        // filterBySearch(searchInput, "everything", projectTableData)
-        console.log(projectTableData)
-    }, [projectTableData])
+        console.log(searchInput)
+        getProjectData().then((projects) => {
+            setProjectTableData([searchTable(searchInput, projects)])
+
+        })
+    }, [searchInput])
 
     return (
         <section className='projects'>
@@ -79,22 +83,11 @@ const Projects = () => {
                         </label>
                         <span> entries</span>
                     </div>
-                    <div className="search-container">
                         
                         <div className="search">
-                            <label>
-                                <input className="search-input-text" type="search" placeholder="Search..." ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
-                            </label>
-                            <label className="search-input-filter">
-                                <select name="amount-of-entries">
-                                    <option value="everything">everything</option>
-                                    <option value="name">name</option>
-                                    <option value="description">description</option>
-                                    <option value="date">date</option>
-                                </select>
-                            </label>
+                            <label htmlFor="search-input-table">Search:  </label>
+                            <input className="search-input-text" id="search-input-table" type="search" placeholder="Search..." ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
                         </div>
-                    </div>
                 </div>
                 {/*middle: the table*/}
                 <table>
