@@ -20,49 +20,68 @@ const Projects = () => {
         nextSlide, prevSlide,
     } = useUserContext()
 
-/*sub-divide the original array into multiple arrays
- to based on how many entires the user wants to show*/
+
     React.useEffect(() => {
         getProjectData().then((projects) => {
+        /*sub-divide the original array into multiple arrays
+        based on how many entires the user wants to show*/
             let size = amountOfEntriesState;
             let arrayOfArrays = [];
             for (var i = 0; i < projects.length; i += size) {
-                arrayOfArrays.push(projects.reverse().slice(i, i + size));
+                arrayOfArrays.push(sortByDate(projects).reverse().slice(i, i + size));
+            }
+        
+            if(projects) {
+                setTotalAmountEntries(projects.length)
+            // search for stuff from the search bar
+                if(searchInput.length >= 1) {
+                    setProjectTableData([searchTable(searchInput, projects)])
+                } else {
+            // dont
+                    setProjectTableData(arrayOfArrays)
+                }
+
+                sortByDate(projects)
             }
             
-            if(projects) {
-                setProjectTableData(arrayOfArrays)
-                setTotalAmountEntries(projects.length)
-            }
-
             if(projectTableData.length <= 1) {
                 setProjectTableIndex(0)
             }
+
         })
-    }, [amountOfEntriesState, projectTableData.length, projectTableIndex])
+    }, [amountOfEntriesState, projectTableData.length, projectTableIndex, searchInput])
     
 
     const searchTable = (usersSearch, tableData) => {
         const filteredData = [];
-        for(var i = 0; i < tableData.length; i++) {
+        for(let i = 0; i < tableData.length; i++) {
             usersSearch = usersSearch.toLowerCase();
-            var name = tableData[i].name.toLowerCase();
+            // vars
+            let name = tableData[i].name.toLowerCase();
+            let description = tableData[i].description.toLowerCase();
+            let date = tableData[i].dateCreated.toLowerCase(); 
 
-            if(name.includes(usersSearch)) {
+            if(name.includes(usersSearch) 
+               || description.includes(usersSearch)
+               || date.includes(usersSearch)) {
                 filteredData.push(tableData[i])
             }
         }
-        console.log(filteredData)
         return filteredData;
     }
 
-    React.useEffect(() => {
-        console.log(searchInput)
-        getProjectData().then((projects) => {
-            setProjectTableData([searchTable(searchInput, projects)])
+/*data args : an array of objects w/ a custom date property formatted like: 12/23/2021*/
+    const sortByDate = (data) => {
+        const arrSorted = data.sort(function(a, b) {
+            /*Convert the date to a single number
+            eg:  12 + 27 + 2021 = 2060*/
+            let aNum = a.dateCreated.split("/").reduce((total, num) => Number(total) + Number(num));
+            let bNum = b.dateCreated.split("/").reduce((total, num) => Number(total) + Number(num));
+            return aNum - bNum;
+          });
+        return arrSorted;
+    }
 
-        })
-    }, [searchInput])
 
     return (
         <section className='projects'>
@@ -119,7 +138,7 @@ const Projects = () => {
                         <button onClick={() => prevSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Prev</button>
                         {projectTableData.map((item, index) => {
                             return (
-                            <button key={index} onClick={() => setProjectTableIndex(index)}>{index + 1}</button>
+                            <button className={`${projectTableIndex === index ? "show-page-btn" : ""}`} key={index} onClick={() => setProjectTableIndex(index)}>{index + 1}</button>
                             )
                         })}
                         <button onClick={() => nextSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Next</button>
