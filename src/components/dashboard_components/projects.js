@@ -3,6 +3,8 @@ import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
 import { FaSortUp, FaSortDown, FaSort } from 'react-icons/fa';
+import Loading from "../Loading"
+
 
 const Projects = () => {
     const [amountOfEntriesState, SetAmountOfEntriesState] = useState(10)
@@ -21,33 +23,53 @@ const Projects = () => {
     } = useUserContext()
 
 
-    React.useEffect(() => {
-        getProjectData().then((projects) => {
+
+    /*items: array of objects
+    amountOfEntriesState: number (a state value)
+    sortByDate: function
+     */
+    const subdivideArray = (items, amountOfEntriesState, sortByDate) => {
         /*sub-divide the original array into multiple arrays
         based on how many entires the user wants to show*/
+        if(items) {
             let size = amountOfEntriesState;
             let arrayOfArrays = [];
-            for (var i = 0; i < projects.length; i += size) {
-                arrayOfArrays.push(sortByDate(projects).reverse().slice(i, i + size));
+            for (var i = 0; i < items.length; i += size) {
+                arrayOfArrays.push(sortByDate(items).reverse().slice(i, i + size));
             }
+            return arrayOfArrays;
+        } else {
+            return [];
+        }
+       
+    }
+    /*items: array of objects
+     arrayOfArrays: array of arrays w/ objects in them
+     setTotalAmountEntries: the set state value for totalAmountEntries which is a number
+     setProjectTableData: 
+     */
+    const setUpTableData = (items, arrayOfArrays, setTotalAmountEntries) => {
+        if(items) {
+            setTotalAmountEntries(items.length)
+        // search for stuff from the search bar
+            if(searchInput.length >= 1) {
+                setProjectTableData([searchTable(searchInput, items)])
+            } else {
+        // dont
+                setProjectTableData(arrayOfArrays)
+            }
+            sortByDate(items)
+        }
         
-            if(projects) {
-                setTotalAmountEntries(projects.length)
-            // search for stuff from the search bar
-                if(searchInput.length >= 1) {
-                    setProjectTableData([searchTable(searchInput, projects)])
-                } else {
-            // dont
-                    setProjectTableData(arrayOfArrays)
-                }
+        if(projectTableData.length <= 1) {
+            setProjectTableIndex(0)
+        }
+    }
 
-                sortByDate(projects)
-            }
-            
-            if(projectTableData.length <= 1) {
-                setProjectTableIndex(0)
-            }
 
+    React.useEffect(() => {
+        getProjectData().then((projects) => {
+            setUpTableData(projects, subdivideArray(projects, amountOfEntriesState, sortByDate), setTotalAmountEntries);
         })
     }, [amountOfEntriesState, projectTableData.length, projectTableIndex, searchInput])
     
