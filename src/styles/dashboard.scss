@@ -40,6 +40,7 @@ body {
 .dashboard__navbar {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     align-items:center;
     font-size:0.85rem;
     background-color: #fff;
@@ -50,6 +51,33 @@ body {
         font-weight: 400;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .dashboard__navbar {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items:center;
+        text-align: center;
+    
+        h2 {
+            font-weight: 400;
+        }
+    }
+
+    .dashboard__heading {
+        text-align: center;
+        margin-bottom:1rem;
+    }
+
+    .dashboard-btn {
+        position: relative;
+        left:50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+  
+  }
 
 .dashboard__inner {
     padding:1rem;

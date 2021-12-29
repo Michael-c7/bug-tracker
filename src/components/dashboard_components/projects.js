@@ -109,7 +109,7 @@ const Projects = () => {
     return (
         <section className='projects'>
             <h2 className="dashboard__heading">Projects</h2>
-            <button className='btn-main spacing-box-tb-m' onClick={() => setProjectModal(!projectModal)}>Create a Project</button>
+            <button className='btn-main spacing-box-tb-m dashboard-btn' onClick={() => setProjectModal(!projectModal)}>Create a Project</button>
             <section className="dashboard-table">
                 {/*top: # of entries filter & search input*/}
                 <div className="top">
@@ -136,7 +136,7 @@ const Projects = () => {
                 {/*middle: the table*/}
                 <table>
                     <tbody>
-                        <tr>
+                        <tr className="table-heading">
                             <th scope="col">Project Name</th>
                             <th scope="col">Description</th>
                             <th scope="col">Created</th>
@@ -148,10 +148,9 @@ const Projects = () => {
                             return (
                                 <tr key={index}>
                                     <td data-label="name">{name ? `${name.length <= 25 ? name : `${name.slice(0,25).trim()}...`}` : "N/A"}</td>
-                                    {/* <td data-label="description" className="truncated">{description ? `${description.length <= 200 ? description : `${description.slice(0, 200).trim()}...`}` : "N/A"}</td> */}
                                     <td data-label="description" className='truncate-text'>{description ? description : "N/A"}</td>
                                     <td data-label="date">{dateCreated ? dateCreated : "N/A"}</td>
-                                    <td data-label="details" className="details"><a href="/">Learn More</a></td>
+                                    <td data-label="details"><a className="details-link" href="/">Learn More</a></td>
                                 </tr>
                             )
                         })}

@@ -4,62 +4,18 @@
 .top {
     display:flex;
     justify-content: space-between;
+    flex-direction: row;
     align-items: center;
-
     margin-top:2rem;
 }
 
+@media screen and (max-width: 600px) {
+  .top {
+    flex-direction: column;
+    margin-top:2rem;
+  }
 
-
-
-
-
-
-
-
-
-
-
-// table
-//   table {
-//     font-family: Arial, Helvetica, sans-serif;
-//     border-collapse: collapse;
-//     overflow: auto;
-//     width: 100%;
-//     margin:0.25rem 0;
-//   }
-  
-//   td, th {
-//     border: none;
-//     padding:1rem;
-//   }
-// // td standard row
-//   td {
-//     background-color: #fff;
-//     border:5px solid #edeef3;
-//     border-left: 0px;
-//     border-right: 0px;
-//   }
-
-//   td:first-of-type {
-//     --border-radius:7px;
-//     border-top-left-radius: var(--border-radius);
-//     border-bottom-left-radius: var(--border-radius);
-//   }
-//   td:last-of-type {
-//     --border-radius:7px;
-//     border-top-right-radius: var(--border-radius);
-//     border-bottom-right-radius:var(--border-radius)x;
-//   }
-
-// // th heading  
-//   th {
-//     text-align: left;
-//     background-color:none;
-//     color: #000;
-//     font-size:1rem;
-//   }
-
+}
 
 table {
   border: 1px solid #ccc;
@@ -124,6 +80,7 @@ table th {
     display: block;
     font-size: .8em;
     text-align: right;
+    width:100%;
   }
   
   table td::before {
@@ -135,10 +92,15 @@ table th {
     float: left;
     font-weight: bold;
     text-transform: uppercase;
+    margin-right:2rem;
   }
   
   table td:last-child {
     border-bottom: 0;
+  }
+
+  .table-heading {
+    display:none;
   }
 }
 
@@ -153,12 +115,12 @@ table th {
   /*makes it so that if the text exceeds its dimensions, it will end with an ellipsis.*/
   text-overflow: ellipsis;
   /*ensures the element has a dimension, to know when to get ellipsis*/
-  width: 200px; 
+  width: initial;
 }
 
 
 
-.details {
+.details-link {
   color:base.$blue-000;
   }
 
