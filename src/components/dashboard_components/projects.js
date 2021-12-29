@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react'
 import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
-import { FaSortUp, FaSortDown, FaSort } from 'react-icons/fa';
+import { FaSortUp, FaSortDown, FaSort, FaSearch } from 'react-icons/fa';
+import { GoSearch } from "react-icons/go"
 import Loading from "../Loading"
 
 
@@ -125,29 +126,32 @@ const Projects = () => {
                         <span> entries</span>
                     </div>
                         
-                        <div className="search">
-                            <label htmlFor="search-input-table">Search:  </label>
-                            <input className="search-input-text" id="search-input-table" type="search" placeholder="Search..." ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
-                        </div>
+                    <div className="search">
+                        <GoSearch className="search__icon"/>
+                        <label>
+                            <input className="search-input-text" type="search" placeholder="Search" ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
+                        </label>
+                    </div>
                 </div>
                 {/*middle: the table*/}
                 <table>
                     <tbody>
                         <tr>
-                            <th>Project Name</th>
-                            <th>Description</th>
-                            <th>Created</th>
-                            <th>Details</th>
+                            <th scope="col">Project Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Details</th>
                         </tr>
                         {/*entries data here*/}
                         {projectTableData[projectTableIndex]?.map((project, index) => {
                             const {name, description, dateCreated} = project;
                             return (
                                 <tr key={index}>
-                                    <td>{name ? `${name.length <= 25 ? name : `${name.slice(0,25).trim()}...`}` : "N/A"}</td>
-                                    <td>{description ? `${description.length <= 200 ? description : `${description.slice(0,200).trim()}...`}` : "N/A"}</td>
-                                    <td>{dateCreated ? dateCreated : "N/A"}</td>
-                                    <td><a href="/">Details</a></td>
+                                    <td data-label="name">{name ? `${name.length <= 25 ? name : `${name.slice(0,25).trim()}...`}` : "N/A"}</td>
+                                    {/* <td data-label="description" className="truncated">{description ? `${description.length <= 200 ? description : `${description.slice(0, 200).trim()}...`}` : "N/A"}</td> */}
+                                    <td data-label="description" className='truncate-text'>{description ? description : "N/A"}</td>
+                                    <td data-label="date">{dateCreated ? dateCreated : "N/A"}</td>
+                                    <td data-label="details" className="details"><a href="/">Learn More</a></td>
                                 </tr>
                             )
                         })}
@@ -160,7 +164,7 @@ const Projects = () => {
                         <button onClick={() => prevSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Prev</button>
                         {projectTableData.map((item, index) => {
                             return (
-                            <button className={`${projectTableIndex === index ? "show-page-btn" : ""}`} key={index} onClick={() => setProjectTableIndex(index)}>{index + 1}</button>
+                                <button className={`${projectTableIndex === index ? "show-page-btn" : ""}`} key={index} onClick={() => setProjectTableIndex(index)}>{index + 1}</button>
                             )
                         })}
                         <button onClick={() => nextSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Next</button>
