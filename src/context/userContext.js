@@ -213,23 +213,6 @@ export const UserContextProvider = ({children}) => {
     }
 
 
-    // projectTableIndex, setProjectTableIndex, projectTableData
-    const nextSlide = (indexState, setIndexState , tableData) => {
-        if(indexState === tableData.length - 1) {
-            setIndexState(0)
-        } else {
-            setIndexState(indexState + 1)
-        }
-    }
-
-    const prevSlide = (indexState, setIndexState , tableData) => {
-        if(indexState === 0) {
-            setIndexState(tableData.length - 1)
-        } else {
-            setIndexState(indexState - 1)
-        }
-    }
-
 
 
     const contextValue = {
@@ -248,7 +231,6 @@ export const UserContextProvider = ({children}) => {
         setProjectData, getProjectData,
         projectTableData, setProjectTableData,
         getTodaysDate,
-        nextSlide, prevSlide,
     }
 
 
