@@ -13,6 +13,8 @@ import Home from "./components/dashboard_components/Home";
 import Projects from "./components/dashboard_components/Projects";
 import Tickets from "./components/dashboard_components/Tickets";
 import RoleManagement from "./components/dashboard_components/RoleManagement";
+// sub tabs
+import ProjectDetails from "./components/dashboard_components/ProjectDetails";
 
 
 import { useUserContext } from "./context/userContext";
@@ -38,6 +40,8 @@ function App() {
             <Route path="Projects" element={<Projects/>}/>
             <Route path="Tickets" element={<Tickets/>}/>
             <Route path="RoleManagement" element={<RoleManagement/>}/>
+            <Route path="projectDetails/:id" element={<ProjectDetails/>}/>
+
           </Route>
           <Route path="*" element={<Navigate to="/dashboard/home"/>}/>
         </Routes>

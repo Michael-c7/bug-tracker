@@ -35,6 +35,7 @@ const Modal = () => {
             description:descriptionRef.current.value,
             teamMembers:selectOptions.multiValue.map(str => JSON.parse(str)),
             dateCreated:getTodaysDate(),
+            id:"",
         }
         setProjectData(createProjectData)
         // close modal
@@ -82,8 +83,10 @@ const Modal = () => {
                     <label className="modal__label" htmlFor="team-members">Add Team Members</label>
                     <select className="modal__input modal-select" name="team-members" id="team-members" multiple ref={teamMembersRef} onChange={getTeamMembers}>
                         {users.map((user, index) => {
+                            const { email, name, role, uid } = user;
                             return (
-                                <option value={JSON.stringify({name:user.name, uid:user.uid})} key={index}>{user.name} ({user.email})</option>
+                                // set the data for the teamMember here
+                                <option value={JSON.stringify({email, name, role, uid})} key={index}>{name} ({email})</option>
                             )
                         })}
                     </select>

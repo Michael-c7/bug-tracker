@@ -1,4 +1,12 @@
 import React, { useRef, useState } from 'react'
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    Navigate
+  } from "react-router-dom";
+
 import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
@@ -122,6 +130,7 @@ const DataTable = (props) => {
 // SideEffects
     React.useEffect(() => {
         getProjectData().then((projects) => {
+            // console.log(projects[0].id)
             setUpTableData(projects, subdivideArray(projects, amountOfEntriesState, sortByDate), setTotalAmountEntries);
         })
     }, [amountOfEntriesState, projectTableData.length, projectTableIndex, searchInput])
@@ -162,13 +171,15 @@ const DataTable = (props) => {
                         </tr>
                         {/*entries data here*/}
                         {projectTableData[projectTableIndex]?.map((project, index) => {
-                            const {name, description, dateCreated} = project;
+                            const {name, description, dateCreated, id} = project;
                             return (
                                 <tr key={index}>
                                     <td data-label="name">{name ? `${name.length <= 25 ? name : `${name.slice(0,25).trim()}...`}` : "N/A"}</td>
                                     <td data-label="description" className='truncate-text'>{description ? description : "N/A"}</td>
                                     <td data-label="date">{dateCreated ? dateCreated : "N/A"}</td>
-                                    <td data-label="details"><a className="details-link" href="/">Learn More</a></td>
+                                    <td data-label="details">
+                                        <Link className="details-link" to={`/dashboard/ProjectDetails/:${id}`}>Learn More</Link>
+                                    </td>
                                 </tr>
                             )
                         })}

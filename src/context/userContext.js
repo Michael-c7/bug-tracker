@@ -142,14 +142,14 @@ export const UserContextProvider = ({children}) => {
     3. team members on the project
     */
     const setProjectData = async (data) => {
-        const {name, description, teamMembers, dateCreated} = data;
-
+        const {name, description, teamMembers, dateCreated, id} = data;
         // creating / adding the info the database
         addDoc(collection(db, "projects"), {
             name,
             description,
             teamMembers,
             dateCreated,
+            id,
 
           }).then(res => console.log(res))
           .catch((error) => setError(error)) 
@@ -163,18 +163,23 @@ export const UserContextProvider = ({children}) => {
                 const description = projectInfo.description.stringValue;
                 const name = projectInfo.name.stringValue;
                 const dateCreated = projectInfo.dateCreated.stringValue;
-
+            // get data for the teamMembers
                 const teamMembers = projectInfo.teamMembers.arrayValue.values.map((item) => {
                     const name = item.mapValue.fields.name.stringValue;
                     const uid = item.mapValue.fields.uid.stringValue;
-                    return {name, uid};
+                    const email = item.mapValue.fields.email.stringValue;
+                    const role = item.mapValue.fields.role.stringValue;
+                    return {name, uid, email, role};
                 });
-
+            /*when setting the id wont show the id when looking in
+            firebase database only when you call getProjectData function
+            because before that it has not been set*/
                 return {
                     name,
                     description,
                     teamMembers,
                     dateCreated,
+                    id:thing.id,
                 }
             })
             return projects;
