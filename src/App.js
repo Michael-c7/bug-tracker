@@ -41,7 +41,7 @@ function App() {
             <Route path="Tickets" element={<Tickets/>}/>
             <Route path="RoleManagement" element={<RoleManagement/>}/>
             <Route path="projectDetails/:id" element={<ProjectDetails/>}/>
-
+            {/* <Route path="ticketDetails/:id" element={<TicketDetails/>}/> */}
           </Route>
           <Route path="*" element={<Navigate to="/dashboard/home"/>}/>
         </Routes>
