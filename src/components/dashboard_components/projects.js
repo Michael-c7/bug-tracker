@@ -19,7 +19,11 @@ const Projects = () => {
 
     const { 
         projectModal, setProjectModal,
+        getProjectData, getDataTableData,
     } = useUserContext()
+    
+    let tableDataVar = _ => getDataTableData("project")
+
 
 
     return (
@@ -33,6 +37,7 @@ const Projects = () => {
                     totalAmountEntries, setTotalAmountEntries,
                     searchInput, setSearchInput,
                     projectTableData, setProjectTableData,
+                    tableDataVar,
                 }}/>
         </section>
     )

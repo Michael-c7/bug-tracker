@@ -10,8 +10,16 @@ import {
 import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
-import { GoSearch } from "react-icons/go"
+
 import Loading from "../Loading"
+
+
+// dataTable comp
+import Entries from "./dataTableComponents/Entries"
+import Search from "./dataTableComponents/Search"
+import PageEntries from './dataTableComponents/PageEntries';
+import PageButtons from './dataTableComponents/PageButtons';
+import Table from './dataTableComponents/Table';
 
 const DataTable = (props) => {
     const {
@@ -20,6 +28,7 @@ const DataTable = (props) => {
         totalAmountEntries, setTotalAmountEntries,
         searchInput, setSearchInput,
         projectTableData, setProjectTableData,
+        tableDataVar
         } = props.data;
 
     // refs
@@ -27,27 +36,12 @@ const DataTable = (props) => {
     const searchTableRef = useRef();
 
     const { 
-        getProjectData,
+        getProjectData, getDataTableData,
     } = useUserContext()
 
 
 
-    // projectTableIndex, setProjectTableIndex, projectTableData
-    const nextSlide = (indexState, setIndexState , tableData) => {
-        if(indexState === tableData.length - 1) {
-            setIndexState(0)
-        } else {
-            setIndexState(indexState + 1)
-        }
-    }
 
-    const prevSlide = (indexState, setIndexState , tableData) => {
-        if(indexState === 0) {
-            setIndexState(tableData.length - 1)
-        } else {
-            setIndexState(indexState - 1)
-        }
-    }
 
     /*items: array of objects
     amountOfEntriesState: number (a state value)
@@ -123,15 +117,18 @@ const DataTable = (props) => {
     }
 
 
-
+    
 
 
 
 // SideEffects
     React.useEffect(() => {
         getProjectData().then((projects) => {
+            // if(tableDataVar === "project")
+
             // console.log(projects[0].id)
             setUpTableData(projects, subdivideArray(projects, amountOfEntriesState, sortByDate), setTotalAmountEntries);
+
         })
     }, [amountOfEntriesState, projectTableData.length, projectTableIndex, searchInput])
 
@@ -140,63 +137,31 @@ const DataTable = (props) => {
         <section className="dashboard-table">
                 {/*top: # of entries filter & search input*/}
                 <div className="top">
-                    <div className="entries">
-                        <span>Show </span> 
-                        <label>
-                            <select name="amount-of-entries" ref={amountOfEntriesRef} onChange={() => SetAmountOfEntriesState(Number(amountOfEntriesRef.current.value))}>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </label>
-                        <span> entries</span>
-                    </div>
+                    <Entries entriesData={{
+                        amountOfEntriesRef,
+                        SetAmountOfEntriesState
+                    }}/>
                         
-                    <div className="search">
-                        <GoSearch className="search__icon"/>
-                        <label>
-                            <input className="search-input-text" type="search" placeholder="Search" ref={searchTableRef} onChange={() => setSearchInput(searchTableRef.current.value)}/>
-                        </label>
-                    </div>
+                    <Search searchData={{
+                        searchTableRef,
+                        setSearchInput
+                    }}/>
                 </div>
                 {/*middle: the table*/}
-                <table>
-                    <tbody>
-                        <tr className="table-heading">
-                            <th scope="col">Project Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Created</th>
-                            <th scope="col">Details</th>
-                        </tr>
-                        {/*entries data here*/}
-                        {projectTableData[projectTableIndex]?.map((project, index) => {
-                            const {name, description, dateCreated, id} = project;
-                            return (
-                                <tr key={index}>
-                                    <td data-label="name">{name ? `${name.length <= 25 ? name : `${name.slice(0,25).trim()}...`}` : "N/A"}</td>
-                                    <td data-label="description" className='truncate-text'>{description ? description : "N/A"}</td>
-                                    <td data-label="date">{dateCreated ? dateCreated : "N/A"}</td>
-                                    <td data-label="details">
-                                        <Link className="details-link" to={`/dashboard/ProjectDetails/:${id}`}>Learn More</Link>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                <Table tableData={{
+                    projectTableData, projectTableIndex,
+                }}/>
                 {/*bottom: showing entires & prev, next buttons*/}
                 <div className="bottom">
-                    <div>Showing 1 to {projectTableData[projectTableIndex]?.length} of {totalAmountEntries} entries</div>
-                    <div className="page-btns">
-                        <button onClick={() => prevSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Prev</button>
-                        {projectTableData.map((item, index) => {
-                            return (
-                                <button className={`${projectTableIndex === index ? "show-page-btn" : ""}`} key={index} onClick={() => setProjectTableIndex(index)}>{index + 1}</button>
-                            )
-                        })}
-                        <button onClick={() => nextSlide(projectTableIndex, setProjectTableIndex, projectTableData)}>Next</button>
-                    </div>
+                    <PageEntries pageEntriesData={{
+                        projectTableData,
+                        projectTableIndex,
+                        totalAmountEntries,
+                    }}/>
+                    <PageButtons pageButtonsData={{
+                        projectTableData,
+                        projectTableIndex, setProjectTableIndex,
+                    }}/>
                 </div>
         </section>
     )

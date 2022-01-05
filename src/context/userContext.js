@@ -215,6 +215,13 @@ export const UserContextProvider = ({children}) => {
             mm='0'+mm
         } 
         return today = mm+'/'+dd+'/'+yyyy;
+
+    }
+// projectType: str, what type of data to get, project data, project details, ect...
+    const getDataTableData = (dataFunc, projectType) => {
+        if(dataFunc) {
+            return dataFunc();
+        }
     }
 
 
@@ -236,6 +243,7 @@ export const UserContextProvider = ({children}) => {
         setProjectData, getProjectData,
         projectTableData, setProjectTableData,
         getTodaysDate,
+        getDataTableData,
     }
 
 

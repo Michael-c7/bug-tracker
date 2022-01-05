@@ -2,56 +2,113 @@ import React, { useState, UseEffect } from 'react'
 import { useUserContext } from '../../context/userContext'
 import "../../styles/dashboard_styles/table.scss"
 import "../../styles/components.scss"
+import { FaAngleDown } from 'react-icons/fa';
+import  DataTable from "../dashboard_components/DataTable"
 import { useParams } from 'react-router-dom'
-// 1. get the current project id 
-// 2. use the project id to show the project details
+
 
 const ProjectDetails = () => {
+
+// 1. get the current project id 
+// 2. use the project id to show the project details
     const { id } = useParams()
     const projectDetailsId = id.slice(1)
 
-    // modal
+// modal
     const [projectModal, setProjectModal] = useState(false)
 
-    // project
+/*assigned personal dataTable*/
     const [amountOfEntriesState, SetAmountOfEntriesState] = useState(10)
     let [projectTableIndex, setProjectTableIndex] = useState(0)
     const [totalAmountEntries, setTotalAmountEntries] = useState(0)
     const [searchInput, setSearchInput] = useState("")
-    // table data
     const [projectTableData, setProjectTableData] = useState([]);
-    // project details
+
+/*tickets dataTable*/
+// const [amountOfEntriesState2, SetAmountOfEntriesState2] = useState(10)
+// let [projectTableIndex2, setProjectTableIndex2] = useState(0)
+// const [totalAmountEntries2, setTotalAmountEntries2] = useState(0)
+// const [searchInput2, setSearchInput2] = useState("")
+// const [projectTableData2, setProjectTableData2] = useState([]);
+
+// accordion
+    const [accordionOpen, setAccordionOpen] = useState(true)
+    const [accordionData, setAccordionData] = useState({})
 
 
-
+    const accordionSetFunc = () => {
+        setAccordionOpen(!accordionOpen)
+        // let accordionDataEl = document.querySelector(".accordion__data").closest(".accordion-data--show");
+        // if(accordionDataEl && accordionOpen) {
+        //     accordionDataEl.style.maxHeight = "auto";
+        // }
+    }
 
     const { 
         getProjectData,
+        getDataTableData
     } = useUserContext()
+
+    
+
 
     React.useEffect(() => {
         getProjectData().then((projects) => {
             projects.map((obj) => {
                 if(obj.id === projectDetailsId) {
-                    setProjectTableData(obj)
-                    console.log(obj)
+                    setAccordionData(obj)
+                    // the team members 
+                    setProjectTableData([obj.teamMembers])
                 }
             })
-            
-            
         })
     }, [])
+
+    let tableDataVar = _ => getDataTableData(projectTableData)
+
+    let accordionName = accordionData.name ? accordionData.name : "Name N/A"
+    let accordionDate = accordionData.dateCreated ? accordionData.dateCreated : "Date N/A"
+    let accordionDescription = accordionData.description ? accordionData.description : " description N/A"
 
     return (
         <section className='projects'>
             <h2 className="dashboard__heading">Project Details ({projectDetailsId})</h2>
             <button className='btn-main spacing-box-tb-m dashboard-btn' onClick={() => setProjectModal(!projectModal)}>Edit Project</button>
+            <div className="spacing-box-lr-sm">
+                <div className="accordion">
+                    <header className="accordion__header">
+                        <h2>{accordionName}</h2>
+                        <button className="close-accordion-btn" onClick={() => accordionSetFunc()}>
+                            <FaAngleDown className="icon"/>
+                        </button>
+                    </header>
+                    <div className={`${accordionOpen ? "accordion__data accordion-data--show" : "accordion__data"}`}>
+                        <p className="">Created: {accordionDate}</p>
+                        <p className="accordion_description">{accordionDescription}</p>
+                    </div>
+                </div>
 
-            <div className="">
-                <h2>Details</h2>
-                <p>{projectTableData.name}</p>
-                <p>{projectTableData.description}</p>
-                <p>Created: {projectTableData.dateCreated}</p>
+
+                {/*assigned personal dataTable */}
+                <DataTable data={
+                    {
+                        amountOfEntriesState, SetAmountOfEntriesState,
+                        projectTableIndex, setProjectTableIndex,
+                        totalAmountEntries, setTotalAmountEntries,
+                        searchInput, setSearchInput,
+                        projectTableData, setProjectTableData,
+                        tableDataVar,
+                    }}/>
+
+                {/*tickets dataTable */}
+                {/* <DataTable data={
+                    {
+                        amountOfEntriesState2, SetAmountOfEntriesState2,
+                        projectTableIndex2, setProjectTableIndex2,
+                        totalAmountEntries2, setTotalAmountEntries2,
+                        searchInput2, setSearchInput2,
+                        projectTableData2, setProjectTableData2,
+                    }}/> */}
             </div>
         </section>
     )
@@ -62,10 +119,10 @@ export default ProjectDetails;
 
 /*
                 Details
-                    basic details
-                        - full name
-                        - description
-                        - created date
+                    basic details [X]
+                        - full name [X]
+                        - description [X]
+                        - created date [X]
 
                     Assigned Personal
                         - table w/ name, email & role
