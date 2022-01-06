@@ -6,23 +6,16 @@ import Loading from "../Loading"
 
 
 import DataTable from './DataTable';
+// dataTable
+import DataTableProject from "../../components/dashboard_components/dataTables/DataTableProject"
+
 
 
 const Projects = () => {
-    const [amountOfEntriesState, SetAmountOfEntriesState] = useState(10)
-    let [projectTableIndex, setProjectTableIndex] = useState(0)
-    const [totalAmountEntries, setTotalAmountEntries] = useState(0)
-    const [searchInput, setSearchInput] = useState("")
-    // table data
-    const [projectTableData, setProjectTableData] = useState([]);
-
-
     const { 
         projectModal, setProjectModal,
         getProjectData, getDataTableData,
     } = useUserContext()
-    
-    let tableDataVar = _ => getDataTableData("project")
 
 
 
@@ -30,17 +23,52 @@ const Projects = () => {
         <section className='projects'>
             <h2 className="dashboard__heading">Projects</h2>
             <button className='btn-main spacing-box-tb-m dashboard-btn' onClick={() => setProjectModal(!projectModal)}>Create a Project</button>
-            <DataTable data={
-                {
-                    amountOfEntriesState, SetAmountOfEntriesState,
-                    projectTableIndex, setProjectTableIndex,
-                    totalAmountEntries, setTotalAmountEntries,
-                    searchInput, setSearchInput,
-                    projectTableData, setProjectTableData,
-                    tableDataVar,
-                }}/>
+            <DataTableProject/>
         </section>
     )
 }
 
 export default Projects;
+
+
+
+/*
+
+// in project / projectDetails, ect...
+    const [dataValue, setDataValue] = useState("")
+
+    // pass dataValue to the dataTable component
+
+// in DataTable
+    // A function to figure out if the pass var is a function,
+
+    const handleTableData = (tableData) => {
+        if(tableData) {
+            if(tableData typeof === function) {
+                tableData().then((projects) => {
+                    return projects
+                })
+
+                return tableData
+            } else if(tableData type === array) {
+                return tableData
+            } else if(tableData typeof === object) {
+                return [tableData]
+            } else {
+                // throw error did not pass a value type of value into handleTableData
+                return []
+            }
+        }
+    }
+
+    1. if a  function get the data,
+    then return as an array
+
+    2. if an array return data
+
+    3. if ann obj return data wrapped in an array [data]
+
+    React.useEffect(() => {
+        setUpTableData(tableData, subdivideArray(tableData, amountOfEntriesState, sortByDate),setTotalAmountEntries, searchInput, setProjectTableIndex);
+    }, [amountOfEntriesState, projectTableData.length, projectTableIndex, searchInput])
+*/

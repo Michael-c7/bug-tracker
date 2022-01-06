@@ -14,6 +14,14 @@ const ProjectDetails = () => {
     const { id } = useParams()
     const projectDetailsId = id.slice(1)
 
+
+    /*
+        ***
+        CURRENTLY NEED A WAY TO GET THE PROJECT DETAILS DATA / OR HAVE THE DATA 
+        AS A FUNCTION I CAN EXPORT OR AS AN INDEPENDENT FUNCTION
+        ***
+    */
+
 // modal
     const [projectModal, setProjectModal] = useState(false)
 
@@ -23,6 +31,10 @@ const ProjectDetails = () => {
     const [totalAmountEntries, setTotalAmountEntries] = useState(0)
     const [searchInput, setSearchInput] = useState("")
     const [projectTableData, setProjectTableData] = useState([]);
+
+
+    // test
+    const [testVar, setTestVar] = useState("the test var")
 
 /*tickets dataTable*/
 // const [amountOfEntriesState2, SetAmountOfEntriesState2] = useState(10)
@@ -44,6 +56,7 @@ const ProjectDetails = () => {
         // }
     }
 
+
     const { 
         getProjectData,
         getDataTableData
@@ -63,8 +76,6 @@ const ProjectDetails = () => {
             })
         })
     }, [])
-
-    let tableDataVar = _ => getDataTableData(projectTableData)
 
     let accordionName = accordionData.name ? accordionData.name : "Name N/A"
     let accordionDate = accordionData.dateCreated ? accordionData.dateCreated : "Date N/A"
@@ -97,9 +108,7 @@ const ProjectDetails = () => {
                         totalAmountEntries, setTotalAmountEntries,
                         searchInput, setSearchInput,
                         projectTableData, setProjectTableData,
-                        tableDataVar,
                     }}/>
-
                 {/*tickets dataTable */}
                 {/* <DataTable data={
                     {

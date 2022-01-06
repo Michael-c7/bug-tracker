@@ -13,6 +13,8 @@ import "../../styles/components.scss"
 
 import Loading from "../Loading"
 
+import useSetDataTableProjects from "./setDataTable/useSetDataTableProjects"
+
 
 // dataTable comp
 import Entries from "./dataTableComponents/Entries"
@@ -28,7 +30,7 @@ const DataTable = (props) => {
         totalAmountEntries, setTotalAmountEntries,
         searchInput, setSearchInput,
         projectTableData, setProjectTableData,
-        tableDataVar
+        tableDataSource,
         } = props.data;
 
     // refs
@@ -36,38 +38,16 @@ const DataTable = (props) => {
     const searchTableRef = useRef();
 
     const { 
-        getProjectData, getDataTableData,
+        getProjectData,
+        subdivideArray,
+        searchTable,
+        sortByDate,
+        // setUpTableData,
     } = useUserContext()
 
 
 
-
-
-    /*items: array of objects
-    amountOfEntriesState: number (a state value)
-    sortByDate: function
-     */
-    const subdivideArray = (items, amountOfEntriesState, sortByDate) => {
-        /*sub-divide the original array into multiple arrays
-        based on how many entires the user wants to show*/
-        if(items) {
-            let size = amountOfEntriesState;
-            let arrayOfArrays = [];
-            for (var i = 0; i < items.length; i += size) {
-                arrayOfArrays.push(sortByDate(items).reverse().slice(i, i + size));
-            }
-            return arrayOfArrays;
-        } else {
-            return [];
-        }
-       
-    }
-    /*items: array of objects
-     arrayOfArrays: array of arrays w/ objects in them
-     setTotalAmountEntries: the set state value for totalAmountEntries which is a number
-     setProjectTableData: 
-     */
-    const setUpTableData = (items, arrayOfArrays, setTotalAmountEntries) => {
+    const setUpTableData = (items, arrayOfArrays, setTotalAmountEntries,searchInput,setProjectTableIndex) => {
         if(items) {
             setTotalAmountEntries(items.length)
         // search for stuff from the search bar
@@ -83,53 +63,52 @@ const DataTable = (props) => {
         if(projectTableData.length <= 1) {
             setProjectTableIndex(0)
         }
-    }    
-    
-
-    const searchTable = (usersSearch, tableData) => {
-        const filteredData = [];
-        for(let i = 0; i < tableData.length; i++) {
-            usersSearch = usersSearch.toLowerCase();
-            // vars
-            let name = tableData[i].name.toLowerCase();
-            let description = tableData[i].description.toLowerCase();
-            let date = tableData[i].dateCreated.toLowerCase(); 
-
-            if(name.includes(usersSearch) 
-               || description.includes(usersSearch)
-               || date.includes(usersSearch)) {
-                filteredData.push(tableData[i])
-            }
-        }
-        return filteredData;
     }
-
-/*data args : an array of objects w/ a custom date property formatted like: 12/23/2021*/
-    const sortByDate = (data) => {
-        const arrSorted = data.sort(function(a, b) {
-            /*Convert the date to a single number
-            eg:  12 + 27 + 2021 = 2060*/
-            let aNum = a.dateCreated.split("/").reduce((total, num) => Number(total) + Number(num));
-            let bNum = b.dateCreated.split("/").reduce((total, num) => Number(total) + Number(num));
-            return aNum - bNum;
-          });
-        return arrSorted;
-    }
-
-
-    
-
-
 
 // SideEffects
+    // useSetDataTableProjects(
+    //     [
+    //         amountOfEntriesState,
+    //         projectTableData.length,
+    //         projectTableIndex,
+    //         searchInput,
+    //         setTotalAmountEntries
+    // ]);
+
+    const checkIfPromise = (args) => {
+        if(typeof args === 'object' && typeof args.then === 'function') return true;
+        return false;
+    }
+
+
+    const handleTableData = (tableData) => {
+        if(tableData) {
+            if(tableData instanceof Function) {
+                return tableData().then(projects => projects);
+            } else if(Array.isArray(tableData)) {
+                return tableData;
+            } else if(typeof tableData === 'object' && tableData !== null) {
+                return [tableData]
+            } else {
+                return []
+            }
+        }
+    }
+
     React.useEffect(() => {
-        getProjectData().then((projects) => {
-            // if(tableDataVar === "project")
+        // getProjectData().then((projects) => {
+        //     setUpTableData(projects, subdivideArray(projects, amountOfEntriesState, sortByDate),setTotalAmountEntries, searchInput, setProjectTableIndex);
+        // })
 
-            // console.log(projects[0].id)
-            setUpTableData(projects, subdivideArray(projects, amountOfEntriesState, sortByDate), setTotalAmountEntries);
-
-        })
+        if(checkIfPromise(handleTableData(getProjectData))) {
+            let data = handleTableData(getProjectData)
+            data.then((items) => {
+                setUpTableData(items, subdivideArray(items, amountOfEntriesState, sortByDate),setTotalAmountEntries, searchInput, setProjectTableIndex);
+            })
+        } else {
+            let data = handleTableData(getProjectData)
+            setUpTableData(data, subdivideArray(data, amountOfEntriesState, sortByDate),setTotalAmountEntries, searchInput, setProjectTableIndex);
+        }
     }, [amountOfEntriesState, projectTableData.length, projectTableIndex, searchInput])
 
 
