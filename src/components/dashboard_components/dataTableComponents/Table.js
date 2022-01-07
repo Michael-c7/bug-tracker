@@ -11,9 +11,14 @@ import {
 
 const Table = (props) => {
     const {
-        projectTableData, projectTableIndex,
+        projectTableData, projectTableIndex,tableDataSource
     } = props.tableData;
 
+    /*GOT THE DATA NEED WAY TO PROPERLY SHOW IT NOW */
+
+    React.useEffect(() => {
+        console.log(projectTableData)
+    }, [])
 
     return (
         <table>

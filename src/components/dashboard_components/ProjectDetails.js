@@ -6,6 +6,8 @@ import { FaAngleDown } from 'react-icons/fa';
 import  DataTable from "../dashboard_components/DataTable"
 import { useParams } from 'react-router-dom'
 
+import DataTableProjectDetails from './dataTables/DataTableProjectDetails';
+
 
 const ProjectDetails = () => {
 
@@ -34,7 +36,7 @@ const ProjectDetails = () => {
 
 
     // test
-    const [testVar, setTestVar] = useState("the test var")
+    const [teamMembers, setTeamMembers] = useState([])
 
 /*tickets dataTable*/
 // const [amountOfEntriesState2, SetAmountOfEntriesState2] = useState(10)
@@ -72,10 +74,16 @@ const ProjectDetails = () => {
                     setAccordionData(obj)
                     // the team members 
                     setProjectTableData([obj.teamMembers])
+                    setTeamMembers(obj.teamMembers)
                 }
             })
         })
     }, [])
+
+
+    React.useEffect(() => {
+        console.log(teamMembers)
+    }, [teamMembers])
 
     let accordionName = accordionData.name ? accordionData.name : "Name N/A"
     let accordionDate = accordionData.dateCreated ? accordionData.dateCreated : "Date N/A"
@@ -101,13 +109,14 @@ const ProjectDetails = () => {
 
 
                 {/*assigned personal dataTable */}
-                <DataTable data={
+                <DataTableProjectDetails data={
                     {
                         amountOfEntriesState, SetAmountOfEntriesState,
                         projectTableIndex, setProjectTableIndex,
                         totalAmountEntries, setTotalAmountEntries,
                         searchInput, setSearchInput,
                         projectTableData, setProjectTableData,
+                        teamMembers,
                     }}/>
                 {/*tickets dataTable */}
                 {/* <DataTable data={

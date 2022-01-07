@@ -129,6 +129,7 @@ const DataTable = (props) => {
                 {/*middle: the table*/}
                 <Table tableData={{
                     projectTableData, projectTableIndex,
+                    tableDataSource,
                 }}/>
                 {/*bottom: showing entires & prev, next buttons*/}
                 <div className="bottom">

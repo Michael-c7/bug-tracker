@@ -3,7 +3,7 @@ import DataTable from '../DataTable';
 import { useUserContext } from '../../../context/userContext'
 
 
-const DataTableProject = () => {
+const DataTableProject = (props) => {
     const [amountOfEntriesState, SetAmountOfEntriesState] = useState(10)
     let [projectTableIndex, setProjectTableIndex] = useState(0)
     const [totalAmountEntries, setTotalAmountEntries] = useState(0)
@@ -14,13 +14,17 @@ const DataTableProject = () => {
 // table data source
     const [tableDataSource, setTableDataSource] = useState([])
 
+
+    const { teamMembers } = props.data;
+
     const { 
         getProjectData,
     } = useUserContext()
 
 // side effect
     React.useEffect(() => {
-        setTableDataSource(getProjectData);
+        setTableDataSource(teamMembers);
+        console.log(tableDataSource)
     }, [])
 
     return (
